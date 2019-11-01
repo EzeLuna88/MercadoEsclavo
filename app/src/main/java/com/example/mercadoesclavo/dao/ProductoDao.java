@@ -1,5 +1,6 @@
-package com.example.mercadoesclavo;
+package com.example.mercadoesclavo.dao;
 
+import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.model.Producto;
 
 import java.util.ArrayList;

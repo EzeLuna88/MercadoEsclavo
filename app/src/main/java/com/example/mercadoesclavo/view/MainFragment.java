@@ -13,8 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mercadoesclavo.ProductoAdapter;
-import com.example.mercadoesclavo.ProductoDao;
+import com.example.mercadoesclavo.adapter.ProductoAdapter;
+import com.example.mercadoesclavo.dao.ProductoDao;
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.model.Producto;
 
