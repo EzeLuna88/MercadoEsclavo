@@ -15,6 +15,7 @@ import com.example.mercadoesclavo.R;
 import com.google.android.material.navigation.NavigationView;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements MainFragment.notificadorMain {
 
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.noti
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         MainFragment mainFragment = new MainFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
