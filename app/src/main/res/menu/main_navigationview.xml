@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_close_black_24dp"
         android:title="Cerrar sesion" />
 
+    <item
+        android:id="@+id/navigationViewAboutUs"
+        android:title="About Us"
+        android:icon="@drawable/ic_help_black_24dp"/>
+
 </menu>
