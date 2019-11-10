@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.noti
                     case R.id.navigationViewMenuCerrarSesion:
                         Toast.makeText(MainActivity.this, "cierro mi sesion", Toast.LENGTH_SHORT).show();
                         break;
+                    case R.id.navigationViewAboutUs:
+                        IrAAboutUs();
                 }
 
                 drawerLayout.closeDrawers();
@@ -71,6 +73,15 @@ public class MainActivity extends AppCompatActivity implements MainFragment.noti
                 return false;
             }
         });
+    }
+
+
+    public void IrAAboutUs() {
+        AboutUsFragment aboutUsFragment = new AboutUsFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.contenedorDeFragment, aboutUsFragment);
+        fragmentTransaction.commit();
     }
 }
 
