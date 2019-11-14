@@ -1,14 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
     tools:context=".view.AboutUsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/historiaTituloAboutUsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="HISTORIA"
+                android:textColor="@color/colorAccent"
+                android:textSize="35dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewHistoriaAboutUsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="MERCADO ESCLAVO es una empresa que nacio en el año 2019 cuando Ezequiel Luna cursaba en Digital House, y como trabajo entregable le pidieron que creara una app donde se pudiera vender distintos objetos. A partir de ahi MERCADO ESCLAVO no ha parado de crecer."
+                android:textColor="@color/colorAccent"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorClaro"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/misionTituloAboutUsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="MISION"
+                android:textColor="@color/colorAccent"
+                android:textSize="35dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewMisionAboutUsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="MERCADO ESCLAVO tiene como mision llevarle al cliente la comodidad de buscar variados productos sin moverse de su casa."
+                android:textColor="@color/colorAccent"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorClaro"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/visionTituloAboutUsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="VISION"
+                android:textColor="@color/colorAccent"
+                android:textSize="35dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewVisionAboutUsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="MERCADO ESCLAVO tiene como objetivo claro el de proporcionarle al cliente una app en la que pueda comprar lo que requiera en el momento. Entendemos que en el mundo de hoy, el tiempo es de suma importancia y por eso es que vemos necesario que las distintas compras puedan realizarse desde un mismo lugar, desde la comodidad de un smartphone"
+                android:textColor="@color/colorAccent"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorClaro"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/valoresTituloAboutUsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="VALORES"
+                android:textColor="@color/colorAccent"
+                android:textSize="35dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorClaro"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/textViewValoresAboutUsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="MERCADO ESCLAVO tiene como valores los de brindar Confianza con los clientes, y dentro de la empresa. Gran responsabilidad en lo que brindamos, lo hacemos de manera profesional y siempre intentando que el cliente termine satisfecho con el servicio ofrecido. Tambien tenemos disponibilidad al cambio, los tiempos de hoy en dia corren a velocidades impensadas, por lo tanto siempre estamos atento a las innovaciones que surgen para poder adoptarlas."
+                android:textColor="@color/colorAccent"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/creadorTituloAboutUsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="CREADOR"
+                android:textColor="@color/colorAccent"
+                android:textSize="35dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewNombreAboutUsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ezequiel Luna"
+                android:textColor="@color/colorAccent"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textViewEdadAboutUsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="31 años"
+                android:textColor="@color/colorAccent"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textViewEstudioAboutUsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Estudiante en Digital House"
+                android:textColor="@color/colorAccent"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorClaro"
+                android:orientation="vertical" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+
