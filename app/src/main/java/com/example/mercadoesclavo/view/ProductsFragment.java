@@ -51,10 +51,11 @@ public class ProductsFragment extends Fragment {
         Bundle bundle = getArguments();
         Categories category = (Categories) bundle.getSerializable(KEY_CATEGORIES);
 
+        String title = category.getName();
+
         final RecyclerView recyclerView = view.findViewById(R.id.recyclerViewMainFragment);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-
         String id = category.getId();
         CategoriesController categoriesController = new CategoriesController();
         categoriesController.getProductos(new ResultListener<Producto>() {
@@ -70,17 +71,6 @@ public class ProductsFragment extends Fragment {
         }, id);
 
 
-
-
-
-
-
-        /*StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-
-        List<Producto> productoList = productoDao.getProducto();
-        ProductoAdapter adapter = new ProductoAdapter(productoList);
-        recyclerView.setAdapter(adapter);*/
         return view;
 
     }
