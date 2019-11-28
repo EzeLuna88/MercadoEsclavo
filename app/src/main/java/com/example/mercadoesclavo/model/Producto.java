@@ -1,48 +1,30 @@
 package com.example.mercadoesclavo.model;
 
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
 public class Producto {
 
+    @SerializedName("results")
+    private List<Results> results;
 
+    public List<Results> getResults() {
+        return results;
+    }
 
+    public void setResults(List<Results> results) {
+        this.results = results;
+    }
 
-    private String nombre;
-    private String precio;
-    private Integer imagen;
-
-    public Producto(String nombre, String precio, Integer imagen) {
-        this.nombre = nombre;
-        this.precio = precio;
-        this.imagen = imagen;
+    public Producto(List<Results> results) {
+        this.results = results;
     }
 
     public Producto() {
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(String precio) {
-        this.precio = precio;
-    }
-
-    public Integer getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(Integer imagen) {
-        this.imagen = imagen;
     }
 }

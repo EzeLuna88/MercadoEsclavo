@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.mercadoesclavo.R;
+import com.example.mercadoesclavo.model.Categories;
 import com.google.android.material.navigation.NavigationView;
 
 import butterknife.BindView;
@@ -19,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity implements MainFragment.notificadorMain {
+public class MainActivity extends AppCompatActivity implements ProductsFragment.notificadorMain, CategoriesFragment.notificadorCategories {
 
     @BindView(R.id.navigationViewMain)
     NavigationView navigationView;
@@ -34,11 +35,10 @@ public class MainActivity extends AppCompatActivity implements MainFragment.noti
 
         ButterKnife.bind(this);
 
-
-        MainFragment mainFragment = new MainFragment();
+        CategoriesFragment categoriesFragment = new CategoriesFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.contenedorDeFragment, mainFragment);
+        fragmentTransaction.replace(R.id.contenedorDeFragment, categoriesFragment);
         fragmentTransaction.commit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMainActivity);
@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.noti
     }
 
 
-
     public void metodoNavigationView(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.navigationViewMenuPerfil:
@@ -69,8 +68,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.noti
                 break;
         }
     }
-
-
 
 
     private void configurarNavigationView() {
@@ -109,5 +106,18 @@ public class MainActivity extends AppCompatActivity implements MainFragment.noti
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void enviarNotificacionCategories(Categories categories, Integer position) {
+        ProductsFragment productsFragment = new ProductsFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.contenedorDeFragment, productsFragment).commit();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ProductsFragment.KEY_CATEGORIES, categories);
+        productsFragment.setArguments(bundle);
+
+
+    }
 }
 
