@@ -26,12 +26,13 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProductsFragment extends Fragment {
+public class ProductsFragment extends Fragment implements ProductoAdapter.ProductoAdapterListener {
 
     public static final String KEY_CATEGORIES = "categories";
     public static final String KEY_POSITION = "position";
     private Producto producto;
     private List<Results> productoList;
+    private notificadorProducto notificadorProducto;
 
     public ProductsFragment() {
         // Required empty public constructor
@@ -40,6 +41,7 @@ public class ProductsFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        this.notificadorProducto = (notificadorProducto) context;
     }
 
     @Override
@@ -63,7 +65,7 @@ public class ProductsFragment extends Fragment {
             public void onFinish(Producto result) {
                 producto = result;
                 productoList = result.getResults();
-                ProductoAdapter productoAdapter = new ProductoAdapter(productoList);
+                ProductoAdapter productoAdapter = new ProductoAdapter(productoList, ProductsFragment.this);
                 recyclerView.setAdapter(productoAdapter);
 
 
@@ -75,7 +77,13 @@ public class ProductsFragment extends Fragment {
 
     }
 
-    public interface notificadorMain {
-        public void hicieronClickMain();
+
+    @Override
+    public void informarSeleccionProducto(Integer posicion, Results results) {
+        notificadorProducto.enviarNotificacionProducto(results, posicion);
+    }
+
+    public interface notificadorProducto {
+        public void enviarNotificacionProducto(Results results, Integer posicion);
     }
 }

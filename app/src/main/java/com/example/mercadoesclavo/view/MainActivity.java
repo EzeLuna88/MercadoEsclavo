@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.model.Categories;
+import com.example.mercadoesclavo.model.Results;
 import com.google.android.material.navigation.NavigationView;
 
 import butterknife.BindView;
@@ -20,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity implements ProductsFragment.notificadorMain, CategoriesFragment.notificadorCategories {
+public class MainActivity extends AppCompatActivity implements ProductsFragment.notificadorProducto, CategoriesFragment.notificadorCategories {
 
     @BindView(R.id.navigationViewMain)
     NavigationView navigationView;
@@ -49,10 +50,7 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
     }
 
 
-    @Override
-    public void hicieronClickMain() {
 
-    }
 
 
     public void metodoNavigationView(MenuItem item) {
@@ -117,6 +115,19 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
         bundle.putSerializable(ProductsFragment.KEY_CATEGORIES, categories);
         productsFragment.setArguments(bundle);
 
+
+    }
+
+    @Override
+    public void enviarNotificacionProducto(Results results, Integer posicion) {
+        DetalleProductFragment detalleProductFragment = new DetalleProductFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.contenedorDeFragment, detalleProductFragment).commit();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(DetalleProductFragment.KEY_DETALLE_PRODUCT, results);
+        detalleProductFragment.setArguments(bundle);
 
     }
 }

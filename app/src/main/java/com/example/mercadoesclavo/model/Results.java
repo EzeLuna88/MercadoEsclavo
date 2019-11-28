@@ -2,7 +2,9 @@ package com.example.mercadoesclavo.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Results {
+import java.io.Serializable;
+
+public class Results implements Serializable {
 
     @SerializedName("id")
     private String id;

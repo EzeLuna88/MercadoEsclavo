@@ -1,6 +1,7 @@
 package com.example.mercadoesclavo.dao;
 
 import com.example.mercadoesclavo.model.Categories;
+import com.example.mercadoesclavo.model.DetalleProducto;
 import com.example.mercadoesclavo.model.Producto;
 import com.example.mercadoesclavo.service.MercadoLibreService;
 import com.example.mercadoesclavo.utils.ResultListener;
@@ -46,23 +47,6 @@ public class MercadoLibreDao {
         });
     }
 
-    /*public void getProductos(final ResultListener<List<Producto>> controllerListener, String id) {
-        Call<List<Producto>> call = mercadoLibreService.getProductos(id);
-
-        call.enqueue(new Callback<List<Producto>>() {
-            @Override
-            public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
-                List<Producto> productos = response.body();
-                controllerListener.onFinish(productos);
-            }
-
-            @Override
-            public void onFailure(Call<List<Producto>> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-    }*/
-
     public void getProductos(final ResultListener<Producto> controllerListener, String id) {
         Call<Producto> call = mercadoLibreService.getProductos(id);
         call.enqueue(new Callback<Producto>() {
@@ -79,4 +63,19 @@ public class MercadoLibreDao {
         });
     }
 
+    public void getDetalleProducto(final ResultListener<DetalleProducto> controllerListener, String id) {
+        Call<DetalleProducto> call = mercadoLibreService.getDetalleProducto(id);
+        call.enqueue(new Callback<DetalleProducto>() {
+            @Override
+            public void onResponse(Call<DetalleProducto> call, Response<DetalleProducto> response) {
+                DetalleProducto detalleProducto = response.body();
+                controllerListener.onFinish(detalleProducto);
+            }
+
+            @Override
+            public void onFailure(Call<DetalleProducto> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
 }

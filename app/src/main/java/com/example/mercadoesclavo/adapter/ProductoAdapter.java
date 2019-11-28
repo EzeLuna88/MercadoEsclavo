@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mercadoesclavo.R;
+import com.example.mercadoesclavo.model.DetalleProducto;
 import com.example.mercadoesclavo.model.Producto;
 import com.example.mercadoesclavo.model.Results;
 
@@ -22,9 +23,11 @@ import butterknife.ButterKnife;
 public class ProductoAdapter extends RecyclerView.Adapter {
 
     private List<Results> resultsList;
+    private ProductoAdapterListener listener;
 
-    public ProductoAdapter(List<Results> resultsList) {
+    public ProductoAdapter(List<Results> resultsList, ProductoAdapterListener listener) {
         this.resultsList = resultsList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -55,13 +58,20 @@ public class ProductoAdapter extends RecyclerView.Adapter {
         TextView textViewCardViewNombreMain;
         @BindView(R.id.textViewViewCardPrecioMain)
         TextView textViewCardViewPrecioMain;
-        private Producto producto;
         private Results results;
 
 
         public ProductoViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Integer adapterPosition = getAdapterPosition();
+                    Results results = resultsList.get(adapterPosition);
+                    listener.informarSeleccionProducto(adapterPosition, results);
+                }
+            });
         }
 
         public void bindProducto(Results resultsDeLaCelda) {
@@ -70,12 +80,12 @@ public class ProductoAdapter extends RecyclerView.Adapter {
             textViewCardViewNombreMain.setText(this.results.getTitle());
             textViewCardViewPrecioMain.setText("$ " + this.results.getPrice().toString());
 
-           /* this.textViewCardViewNombreMain.setText(this.producto.getNombre());
-            this.textViewCardViewPrecioMain.setText(this.producto.getPrecio());
-            this.imageViewCardViewMain.setImageResource(this.producto.getImagen());
-        */
         }
 
+    }
+
+    public interface ProductoAdapterListener {
+        void informarSeleccionProducto(Integer posicion, Results results);
     }
 
 
