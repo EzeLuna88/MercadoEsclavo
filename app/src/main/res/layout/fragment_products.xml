@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ProductsFragment">
+    tools:context=".view.fragment.ProductsFragment"
+    android:background="@color/colorPrimary">
 
     <TextView
         android:id="@+id/textViewProductsFragment"
@@ -19,7 +20,7 @@
         android:id="@+id/recyclerViewMainFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#c0ffb3"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@id/textViewProductsFragment"
         app:layout_constraintLeft_toLeftOf="parent"
         />

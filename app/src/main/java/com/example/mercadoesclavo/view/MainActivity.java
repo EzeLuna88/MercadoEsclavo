@@ -14,7 +14,10 @@ import android.widget.Toast;
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.model.Categories;
 import com.example.mercadoesclavo.model.Results;
+import com.example.mercadoesclavo.view.fragment.ProductsFragment;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.BindView;
 
@@ -27,13 +30,14 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
     NavigationView navigationView;
     @BindView(R.id.drawerLayoutMain)
     DrawerLayout drawerLayout;
+    private FirebaseAuth mAuth;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mAuth = FirebaseAuth.getInstance();
         ButterKnife.bind(this);
 
         CategoriesFragment categoriesFragment = new CategoriesFragment();
@@ -48,9 +52,6 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
         configurarNavigationView();
 
     }
-
-
-
 
 
     public void metodoNavigationView(MenuItem item) {
@@ -85,6 +86,9 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
                         break;
                     case R.id.navigationViewAboutUs:
                         IrAAboutUs();
+                        break;
+                    case R.id.navigationViewMenuIniciarSesion:
+                        GoToLoginFragment();
                 }
 
 
@@ -101,6 +105,14 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.contenedorDeFragment, aboutUsFragment);
+        fragmentTransaction.commit();
+    }
+
+    public void GoToLoginFragment() {
+        LoginFragment loginFragment = new LoginFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.contenedorDeFragment, loginFragment);
         fragmentTransaction.commit();
     }
 
@@ -129,6 +141,14 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
         bundle.putSerializable(DetalleProductFragment.KEY_DETALLE_PRODUCT, results);
         detalleProductFragment.setArguments(bundle);
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        //TODO si esta logueado o no que haga algo
     }
 }
 

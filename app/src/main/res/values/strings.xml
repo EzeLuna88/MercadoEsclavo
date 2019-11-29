@@ -10,4 +10,15 @@
     <string name="condicion">Condicion: </string>
     <string name="ubicacionDelVendedor">Ubicacion del vendedor: </string>
     <string name="garantia">Garantia: </string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="Nombre">Nombre</string>
+    <string name="Apellido">Apellido</string>
+    <string name="Edad">Edad</string>
+    <string name="Telefono">Telefono</string>
+    <string name="iniciar_sesion">Iniciar Sesion</string>
+    <string name="cerrar_sesion">Cerrar sesion</string>
+    <string name="sobre_nosotros">Sobre nosotros</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="mi_perfil">Mi Perfil</string>
 </resources>

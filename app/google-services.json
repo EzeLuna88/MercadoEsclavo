@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "317397889455",
+    "firebase_url": "https://mercadoesclavo-3eb8d.firebaseio.com",
+    "project_id": "mercadoesclavo-3eb8d",
+    "storage_bucket": "mercadoesclavo-3eb8d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317397889455:android:2be158e655d2d7622d7f5a",
+        "android_client_info": {
+          "package_name": "com.example.mercadoesclavo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317397889455-rinjd9vdbhl016g6p5ulomq9siu6qavp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mercadoesclavo",
+            "certificate_hash": "e6624101f30d507dfe38acad4430033eb3a9b079"
+          }
+        },
+        {
+          "client_id": "317397889455-pu95n13ndsdg60gkhavsl5t3dducrufj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNxnIoVZSAqqutMuTnHnGCD0rZxN7vZyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317397889455-pu95n13ndsdg60gkhavsl5t3dducrufj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -31,8 +31,8 @@ public class DetalleProductFragment extends Fragment {
 
     @BindView(R.id.textViewTitleDetalleProductFragment)
     TextView textViewTitleDetalleProductFragment;
-    @BindView(R.id.imageViewCardViewDetalleProductFragment)
-    ImageView imageViewCardViewDetalleProductFragment;
+    /*@BindView(R.id.imageViewCardViewDetalleProductFragment)
+    ImageView imageViewCardViewDetalleProductFragment;*/
     @BindView(R.id.textViewPriceDetalleProductFragment)
     TextView textViewPriceDetalleProductFragment;
     @BindView(R.id.textViewCantidadDetalleProductFragment)
@@ -45,6 +45,8 @@ public class DetalleProductFragment extends Fragment {
     TextView textViewCondicionDetalleProductFragment;
     @BindView(R.id.textViewUbicacionDetalleProductFragment)
     TextView textViewUbicacionDetalleProductFragment;
+    @BindView(R.id.textViewGarantiaDetalleProductFragment)
+    TextView textViewGarantiaDetalleProductFragment;
 
 
     public DetalleProductFragment() {
@@ -68,19 +70,25 @@ public class DetalleProductFragment extends Fragment {
             @Override
             public void onFinish(DetalleProducto result) {
                 DetalleProducto detalleProducto = result;
-                Glide.with(view).load(detalleProducto.getSecureThumbnail()).into(imageViewCardViewDetalleProductFragment);
+//                Glide.with(view).load(detalleProducto.getSecureThumbnail()).into(imageViewCardViewDetalleProductFragment);
                 textViewTitleDetalleProductFragment.setText(detalleProducto.getTitle());
                 textViewPriceDetalleProductFragment.setText(detalleProducto.getPrice().toString());
                 textViewDisponibleDetalleProductFragment.setText(detalleProducto.getAvailableQuantity().toString());
                 textViewCantidadDetalleProductFragment.setText(detalleProducto.getInitialQuantity().toString());
                 textViewTipoDeCompraDetalleProductFragment.setText(detalleProducto.getBuyingMode());
                 textViewCondicionDetalleProductFragment.setText(detalleProducto.getCondition());
-                textViewUbicacionDetalleProductFragment.setText(detalleProducto.getSellerAddress().getCity().getName());
+                String ubicacion = detalleProducto.getSellerAddress().getCity().getName() + ", " + detalleProducto.getSellerAddress().getState().getName() +
+                        ", " + detalleProducto.getSellerAddress().getCountry().getName();
+                textViewUbicacionDetalleProductFragment.setText(ubicacion);
+
+                textViewGarantiaDetalleProductFragment.setText(detalleProducto.getWarranty());
 
             }
         }, id);
 
         return view;
     }
+
+
 
 }
