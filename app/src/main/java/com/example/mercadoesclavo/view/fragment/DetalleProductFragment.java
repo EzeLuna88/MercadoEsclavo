@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mercadoesclavo.R;
@@ -19,6 +20,10 @@ import com.example.mercadoesclavo.model.Description;
 import com.example.mercadoesclavo.model.DetalleProducto;
 import com.example.mercadoesclavo.model.Results;
 import com.example.mercadoesclavo.utils.ResultListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +55,11 @@ public class DetalleProductFragment extends Fragment {
     TextView textViewGarantiaDetalleProductFragment;
     @BindView(R.id.textViewDescripcionDetalleProductFragment)
     TextView textViewDescripcionDetalleProductFragment;
+    @BindView(R.id.floatingButton)
+    FloatingActionButton floatingActionButton;
+    private FirebaseAuth mAuth;
+    private DetalleProducto detalleProducto;
+    private Description description;
 
     public DetalleProductFragment() {
         // Required empty public constructor
@@ -62,6 +72,9 @@ public class DetalleProductFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_detalle_product, container, false);
         ButterKnife.bind(this, view);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
         Bundle bundle = getArguments();
         Results results = (Results) bundle.getSerializable(KEY_DETALLE_PRODUCT);
@@ -71,7 +84,7 @@ public class DetalleProductFragment extends Fragment {
         categoriesController.getDetalleProducto(new ResultListener<DetalleProducto>() {
             @Override
             public void onFinish(DetalleProducto result) {
-                DetalleProducto detalleProducto = result;
+                detalleProducto = result;
 //                Glide.with(view).load(detalleProducto.getSecureThumbnail()).into(imageViewCardViewDetalleProductFragment);
                 textViewTitleDetalleProductFragment.setText(detalleProducto.getTitle());
                 textViewPriceDetalleProductFragment.setText(detalleProducto.getPrice().toString());
@@ -82,22 +95,47 @@ public class DetalleProductFragment extends Fragment {
                 String ubicacion = detalleProducto.getSellerAddress().getCity().getName() + ", " + detalleProducto.getSellerAddress().getState().getName() +
                         ", " + detalleProducto.getSellerAddress().getCountry().getName();
                 textViewUbicacionDetalleProductFragment.setText(ubicacion);
-
                 textViewGarantiaDetalleProductFragment.setText(detalleProducto.getWarranty());
-
             }
         }, id);
 
         categoriesController.getDescription(new ResultListener<Description>() {
             @Override
             public void onFinish(Description result) {
-                Description description = result;
+                description = result;
                 textViewDescripcionDetalleProductFragment.setText(description.getPlaintText());
             }
         }, id);
 
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                if (currentUser != null) {
+                    String userUid = mAuth.getCurrentUser().getUid();
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db = FirebaseFirestore.getInstance();
+
+                    if ()
+                    db.collection(userUid).document(detalleProducto.getId()).set(detalleProducto);
+                    Toast.makeText(getContext(), "fue agregado a favoritos", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
         return view;
+
+
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+    }
 }

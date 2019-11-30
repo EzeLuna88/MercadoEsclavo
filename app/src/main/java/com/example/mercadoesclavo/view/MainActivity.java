@@ -21,10 +21,12 @@ import android.widget.Toast;
 
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.model.Categories;
+import com.example.mercadoesclavo.model.DetalleProducto;
 import com.example.mercadoesclavo.model.Results;
 import com.example.mercadoesclavo.view.fragment.AboutUsFragment;
 import com.example.mercadoesclavo.view.fragment.CategoriesFragment;
 import com.example.mercadoesclavo.view.fragment.DetalleProductFragment;
+import com.example.mercadoesclavo.view.fragment.FavoritosFragment;
 import com.example.mercadoesclavo.view.fragment.LoginFragment;
 import com.example.mercadoesclavo.view.fragment.MiPerfilFragment;
 import com.example.mercadoesclavo.view.fragment.ProductsFragment;
@@ -38,7 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity implements ProductsFragment.notificadorProducto, CategoriesFragment.notificadorCategories {
+public class MainActivity extends AppCompatActivity implements FavoritosFragment.notificadorFavoritos, ProductsFragment.notificadorProducto, CategoriesFragment.notificadorCategories {
 
     @BindView(R.id.navigationViewMain)
     NavigationView navigationView;
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
                         MiPerfilClick();
                         break;
                     case R.id.navigationViewMenuFavoritos:
-                        Toast.makeText(MainActivity.this, "voy a favoritos", Toast.LENGTH_SHORT).show();
+                        FavoritosClick();
                         break;
                     case R.id.navigationViewMenuCerrarSesion:
                         CerrarSesionClick();
@@ -122,6 +124,15 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
             Toast.makeText(this, "Ya haz iniciado sesion", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public void FavoritosClick() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            GoToFavoritosFragment();
+        } else {
+            Toast.makeText(this, "No haz iniciado sesion", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void CerrarSesionClick() {
@@ -157,6 +168,13 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.contenedorDeFragment, loginFragment);
         fragmentTransaction.commit();
+    }
+
+    public void GoToFavoritosFragment() {
+        FavoritosFragment favoritosFragment = new FavoritosFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.contenedorDeFragment, favoritosFragment).commit();
     }
 
     public void GoToPerfilFragment() {
@@ -218,5 +236,9 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
     }
 
 
+    @Override
+    public void enviarNotificacionFavoritos(DetalleProducto detalleProducto, Integer posicion) {
+
+    }
 }
 
