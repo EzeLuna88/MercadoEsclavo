@@ -1,13 +1,13 @@
 package com.example.mercadoesclavo.model;
 
-public class User {
+public class UserMercadoEsclavo {
 
     private String nombre;
     private String apellido;
     private String edad;
     private String telefono;
 
-    public User(String nombre, String apellido, String edad, String telefono) {
+    public UserMercadoEsclavo(String nombre, String apellido, String edad, String telefono) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
@@ -44,5 +44,8 @@ public class User {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public UserMercadoEsclavo() {
     }
 }

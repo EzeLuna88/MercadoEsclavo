@@ -1,4 +1,4 @@
-package com.example.mercadoesclavo.view;
+package com.example.mercadoesclavo.view.fragment;
 
 
 import android.media.Image;

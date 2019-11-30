@@ -1,4 +1,4 @@
-package com.example.mercadoesclavo.view;
+package com.example.mercadoesclavo.view.fragment;
 
 
 import android.os.Bundle;
@@ -14,23 +14,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mercadoesclavo.R;
-import com.example.mercadoesclavo.model.User;
+import com.example.mercadoesclavo.model.UserMercadoEsclavo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -114,19 +107,16 @@ public class NewUserFragment extends Fragment {
                                                 if (task.isSuccessful()) {
                                                     FirebaseUser user = mAuth.getCurrentUser();
                                                     String userUid = mAuth.getCurrentUser().getUid();
-                                                    User userMercadoEsclavo = new User(nombre, apellido, edad, telefono);
+                                                    UserMercadoEsclavo userMercadoEsclavo = new UserMercadoEsclavo(nombre, apellido, edad, telefono);
                                                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                                                     db.collection("usuariosMercadoEsclavo").document(userUid).set(userMercadoEsclavo);
                                                     String mensaje = user.getEmail() + " fue registrado";
                                                     Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
                                                     GoToHome();
-
                                                 } else {
                                                     // If sign in fails, display a message to the user.
                                                     Toast.makeText(getContext(), "Error en el Registro", Toast.LENGTH_SHORT).show();
-
                                                 }
-
                                                 // ...
                                             }
                                         });

@@ -8,6 +8,7 @@ import android.util.Base64;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,13 +16,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.model.Categories;
 import com.example.mercadoesclavo.model.Results;
+import com.example.mercadoesclavo.view.fragment.AboutUsFragment;
+import com.example.mercadoesclavo.view.fragment.CategoriesFragment;
+import com.example.mercadoesclavo.view.fragment.DetalleProductFragment;
+import com.example.mercadoesclavo.view.fragment.LoginFragment;
+import com.example.mercadoesclavo.view.fragment.MiPerfilFragment;
 import com.example.mercadoesclavo.view.fragment.ProductsFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -86,19 +91,19 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
                 metodoNavigationView(menuItem);
                 switch (menuItem.getItemId()) {
                     case R.id.navigationViewMenuPerfil:
-                        Toast.makeText(MainActivity.this, "voy a mi perfil", Toast.LENGTH_SHORT).show();
+                        MiPerfilClick();
                         break;
                     case R.id.navigationViewMenuFavoritos:
                         Toast.makeText(MainActivity.this, "voy a favoritos", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.navigationViewMenuCerrarSesion:
-                        Toast.makeText(MainActivity.this, "cierro mi sesion", Toast.LENGTH_SHORT).show();
+                        CerrarSesionClick();
+                        break;
+                    case R.id.navigationViewMenuIniciarSesion:
+                        IniciarSesionClick();
                         break;
                     case R.id.navigationViewAboutUs:
                         IrAAboutUs();
-                        break;
-                    case R.id.navigationViewMenuIniciarSesion:
-                        GoToLoginFragment();
                 }
 
 
@@ -109,6 +114,34 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
         });
     }
 
+    public void IniciarSesionClick() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            GoToLoginFragment();
+        } else {
+            Toast.makeText(this, "Ya haz iniciado sesion", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void CerrarSesionClick() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            FirebaseAuth.getInstance().signOut();
+            Toast.makeText(MainActivity.this, "Sesion finalizada", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No haz iniciado sesion", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void MiPerfilClick() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            GoToPerfilFragment();
+        } else {
+            Toast.makeText(this, "No haz iniciado sesion", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     public void IrAAboutUs() {
         AboutUsFragment aboutUsFragment = new AboutUsFragment();
@@ -124,6 +157,13 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.contenedorDeFragment, loginFragment);
         fragmentTransaction.commit();
+    }
+
+    public void GoToPerfilFragment() {
+        MiPerfilFragment miPerfilFragment = new MiPerfilFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.contenedorDeFragment, miPerfilFragment).commit();
     }
 
     @Override
@@ -156,7 +196,6 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         //TODO si esta logueado o no que haga algo
     }
@@ -177,5 +216,7 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
         }
         System.out.println("MI KEY HASH: " + keyHash);
     }
+
+
 }
 

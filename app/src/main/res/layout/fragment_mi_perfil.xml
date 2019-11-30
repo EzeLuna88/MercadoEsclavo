@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorClaro"
+    android:paddingLeft="20dp"
+    tools:context=".view.fragment.MiPerfilFragment">
+
+
+    <TextView
+        android:id="@+id/email"
+        android:paddingRight="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="@string/Email"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/textViewEmailPerfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toRightOf="@id/email"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:paddingRight="20dp"
+        android:id="@+id/nombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:text="@string/Nombre"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/email" />
+
+    <TextView
+        android:paddingTop="15dp"
+        android:id="@+id/textViewNombrePerfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toRightOf="@id/nombre"
+        app:layout_constraintTop_toBottomOf="@id/textViewEmailPerfil" />
+
+    <TextView
+        android:paddingRight="20dp"
+        android:id="@+id/apellido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:text="@string/Apellido"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nombre" />
+
+    <TextView
+        android:paddingTop="15dp"
+        android:id="@+id/textViewApellidoPerfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toRightOf="@id/apellido"
+        app:layout_constraintTop_toBottomOf="@id/textViewNombrePerfil" />
+
+    <TextView
+        android:paddingRight="20dp"
+        android:id="@+id/edad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:text="@string/Edad"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/apellido" />
+
+    <TextView
+        android:paddingTop="15dp"
+        android:id="@+id/textViewEdadPerfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toRightOf="@id/edad"
+        app:layout_constraintTop_toBottomOf="@id/textViewApellidoPerfil" />
+
+
+    <TextView
+        android:paddingRight="20dp"
+        android:id="@+id/telefono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:text="@string/Telefono"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edad" />
+
+    <TextView
+        android:id="@+id/textViewTelefonoPerfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:paddingTop="15dp"
+        app:layout_constraintLeft_toRightOf="@id/telefono"
+        app:layout_constraintTop_toBottomOf="@id/textViewEdadPerfil" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
