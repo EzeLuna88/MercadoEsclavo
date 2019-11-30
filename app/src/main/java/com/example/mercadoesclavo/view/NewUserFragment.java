@@ -14,11 +14,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mercadoesclavo.R;
+import com.example.mercadoesclavo.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +66,7 @@ public class NewUserFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_user, container, false);
 
         mAuth = FirebaseAuth.getInstance();
-
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         ButterKnife.bind(this, view);
 
         botonRegistrarse.setOnClickListener(new View.OnClickListener() {
@@ -76,26 +83,68 @@ public class NewUserFragment extends Fragment {
     private void Register() {
         String email = emailLogin.getText().toString();
         String password = passwordLogin.getText().toString();
+        final String nombre = nombreLogin.getText().toString();
+        final String apellido = apellidoLogin.getText().toString();
+        final String edad = edadLogin.getText().toString();
+        final String telefono = telefonoLogin.getText().toString();
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            String mensaje = user.getEmail() + " fue registrado";
-                            Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
-
+        if (email.isEmpty()) {
+            Toast.makeText(getContext(), "Completar campo Email", Toast.LENGTH_SHORT).show();
+        } else {
+            if (password.isEmpty()) {
+                Toast.makeText(getContext(), "Completar campo Password", Toast.LENGTH_SHORT).show();
+            } else {
+                if (nombre.isEmpty()) {
+                    Toast.makeText(getContext(), "Completar campo Nombre", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (apellido.isEmpty()) {
+                        Toast.makeText(getContext(), "Completar campo Apellido", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (edad.isEmpty()) {
+                            Toast.makeText(getContext(), "Completar campo Edad", Toast.LENGTH_SHORT).show();
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(getContext(), "Error en el Registro", Toast.LENGTH_SHORT).show();
+                            if (telefono.isEmpty()) {
+                                Toast.makeText(getContext(), "Completar campo Telefono", Toast.LENGTH_SHORT).show();
+                            } else {
+
+                                mAuth.createUserWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    FirebaseUser user = mAuth.getCurrentUser();
+                                                    String userUid = mAuth.getCurrentUser().getUid();
+                                                    User userMercadoEsclavo = new User(nombre, apellido, edad, telefono);
+                                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                                    db.collection("usuariosMercadoEsclavo").document(userUid).set(userMercadoEsclavo);
+                                                    String mensaje = user.getEmail() + " fue registrado";
+                                                    Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
+                                                    GoToHome();
+
+                                                } else {
+                                                    // If sign in fails, display a message to the user.
+                                                    Toast.makeText(getContext(), "Error en el Registro", Toast.LENGTH_SHORT).show();
+
+                                                }
+
+                                                // ...
+                                            }
+                                        });
+                            }
+
 
                         }
-
-                        // ...
                     }
-                });
+                }
+            }
+        }
     }
 
-
+    private void GoToHome() {
+        CategoriesFragment categoriesFragment = new CategoriesFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.contenedorDeFragment, categoriesFragment)
+                .addToBackStack(null)
+                .commit();
+    }
 }

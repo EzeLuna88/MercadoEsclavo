@@ -1,5 +1,13 @@
 package com.example.mercadoesclavo.view;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.os.Bundle;
+import android.util.Base64;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,6 +26,7 @@ import com.example.mercadoesclavo.view.fragment.ProductsFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import butterknife.BindView;
 
@@ -39,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         ButterKnife.bind(this);
-
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        obtenerKeyHash();
         CategoriesFragment categoriesFragment = new CategoriesFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -149,6 +159,23 @@ public class MainActivity extends AppCompatActivity implements ProductsFragment.
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         //TODO si esta logueado o no que haga algo
+    }
+
+    public void obtenerKeyHash() {
+        String keyHash = "";
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                keyHash = Base64.encodeToString(md.digest(), Base64.DEFAULT);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        System.out.println("MI KEY HASH: " + keyHash);
     }
 }
 
