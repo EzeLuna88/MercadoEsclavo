@@ -2,6 +2,7 @@ package com.example.mercadoesclavo.controller;
 
 import com.example.mercadoesclavo.dao.MercadoLibreDao;
 import com.example.mercadoesclavo.model.Categories;
+import com.example.mercadoesclavo.model.Description;
 import com.example.mercadoesclavo.model.DetalleProducto;
 import com.example.mercadoesclavo.model.Producto;
 import com.example.mercadoesclavo.utils.ResultListener;
@@ -40,6 +41,15 @@ public class CategoriesController {
         mercadoLibreDao.getDetalleProducto(new ResultListener<DetalleProducto>() {
             @Override
             public void onFinish(DetalleProducto result) {
+                viewController.onFinish(result);
+            }
+        }, id);
+    }
+
+    public void getDescription(final ResultListener<Description> viewController, String id) {
+        mercadoLibreDao.getDescription(new ResultListener<Description>() {
+            @Override
+            public void onFinish(Description result) {
                 viewController.onFinish(result);
             }
         }, id);

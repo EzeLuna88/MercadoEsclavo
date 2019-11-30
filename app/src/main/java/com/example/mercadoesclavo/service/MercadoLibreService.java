@@ -1,6 +1,7 @@
 package com.example.mercadoesclavo.service;
 
 import com.example.mercadoesclavo.model.Categories;
+import com.example.mercadoesclavo.model.Description;
 import com.example.mercadoesclavo.model.DetalleProducto;
 import com.example.mercadoesclavo.model.Producto;
 
@@ -13,10 +14,10 @@ import retrofit2.http.Query;
 
 public interface MercadoLibreService {
 
-    @GET("categories")
+    @GET("/sites/MLA/categories")
     Call<List<Categories>> getCategories();
 
-    @GET("search?category=")
+    @GET("/sites/MLA/search?category=")
     Call<Producto> getProductos(
             @Query("category")
                     String id
@@ -26,5 +27,10 @@ public interface MercadoLibreService {
     Call<DetalleProducto> getDetalleProducto(
             @Path("id")
                     String id);
+
+    @GET("/items/{id}/description")
+    Call<Description> getDescription(
+            @Path("id")
+    String id);
 
 }

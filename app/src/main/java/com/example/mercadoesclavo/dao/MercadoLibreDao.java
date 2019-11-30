@@ -1,6 +1,7 @@
 package com.example.mercadoesclavo.dao;
 
 import com.example.mercadoesclavo.model.Categories;
+import com.example.mercadoesclavo.model.Description;
 import com.example.mercadoesclavo.model.DetalleProducto;
 import com.example.mercadoesclavo.model.Producto;
 import com.example.mercadoesclavo.service.MercadoLibreService;
@@ -17,6 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MercadoLibreDao {
 
     public static final String BASE_URL = "https://api.mercadolibre.com/sites/MLA/";
+
 
     private Retrofit retrofit;
     private MercadoLibreService mercadoLibreService;
@@ -74,6 +76,22 @@ public class MercadoLibreDao {
 
             @Override
             public void onFailure(Call<DetalleProducto> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void getDescription(final ResultListener<Description> controllerListener, String id) {
+        Call<Description> call = mercadoLibreService.getDescription(id);
+        call.enqueue(new Callback<Description>() {
+            @Override
+            public void onResponse(Call<Description> call, Response<Description> response) {
+                Description description = response.body();
+                controllerListener.onFinish(description);
+            }
+
+            @Override
+            public void onFailure(Call<Description> call, Throwable t) {
                 t.printStackTrace();
             }
         });

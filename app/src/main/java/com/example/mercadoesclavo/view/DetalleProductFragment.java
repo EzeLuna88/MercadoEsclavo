@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.controller.CategoriesController;
+import com.example.mercadoesclavo.model.Description;
 import com.example.mercadoesclavo.model.DetalleProducto;
 import com.example.mercadoesclavo.model.Results;
 import com.example.mercadoesclavo.utils.ResultListener;
@@ -47,7 +48,8 @@ public class DetalleProductFragment extends Fragment {
     TextView textViewUbicacionDetalleProductFragment;
     @BindView(R.id.textViewGarantiaDetalleProductFragment)
     TextView textViewGarantiaDetalleProductFragment;
-
+    @BindView(R.id.textViewDescripcionDetalleProductFragment)
+    TextView textViewDescripcionDetalleProductFragment;
 
     public DetalleProductFragment() {
         // Required empty public constructor
@@ -86,9 +88,16 @@ public class DetalleProductFragment extends Fragment {
             }
         }, id);
 
+        categoriesController.getDescription(new ResultListener<Description>() {
+            @Override
+            public void onFinish(Description result) {
+                Description description = result;
+                textViewDescripcionDetalleProductFragment.setText(description.getPlaintText());
+            }
+        }, id);
+
         return view;
     }
-
 
 
 }
