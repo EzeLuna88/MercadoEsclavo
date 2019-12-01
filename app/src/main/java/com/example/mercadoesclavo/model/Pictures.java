@@ -2,7 +2,9 @@ package com.example.mercadoesclavo.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Pictures {
+import java.io.Serializable;
+
+public class Pictures implements Serializable {
 
     @SerializedName("secure_url")
     private String secureUrl;

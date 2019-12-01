@@ -26,8 +26,8 @@ public class DetalleProducto {
     private String thumbnail;
     @SerializedName("secure_thumbnail")
     private String secureThumbnail;
-    @SerializedName("picture")
-    private List<Pictures> picturesList;
+    @SerializedName("pictures")
+    private List<Pictures> pictures;
     @SerializedName("seller_address")
     private SellerAddress sellerAddress;
     @SerializedName("warranty")
@@ -113,12 +113,12 @@ public class DetalleProducto {
         this.secureThumbnail = secureThumbnail;
     }
 
-    public List<Pictures> getPicturesList() {
-        return picturesList;
+    public List<Pictures> getPictures() {
+        return pictures;
     }
 
-    public void setPicturesList(List<Pictures> picturesList) {
-        this.picturesList = picturesList;
+    public void setPictures(List<Pictures> picturesList) {
+        this.pictures = picturesList;
     }
 
     public SellerAddress getSellerAddress() {
@@ -139,7 +139,7 @@ public class DetalleProducto {
 
     public DetalleProducto(String id, String title, String sellerId, Double price, Integer initialQuantity,
                            Integer availableQuantity, String buyingMode, String condition, String thumbnail,
-                           String secureThumbnail, List<Pictures> picturesList, SellerAddress sellerAddress, String warranty) {
+                           String secureThumbnail, List<Pictures> pictures, SellerAddress sellerAddress, String warranty) {
         this.id = id;
         this.title = title;
         this.sellerId = sellerId;
@@ -150,7 +150,7 @@ public class DetalleProducto {
         this.condition = condition;
         this.thumbnail = thumbnail;
         this.secureThumbnail = secureThumbnail;
-        this.picturesList = picturesList;
+        this.pictures = pictures;
         this.sellerAddress = sellerAddress;
         this.warranty = warranty;
     }

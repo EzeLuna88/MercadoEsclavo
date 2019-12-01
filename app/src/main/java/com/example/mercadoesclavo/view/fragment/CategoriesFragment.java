@@ -74,4 +74,7 @@ public class CategoriesFragment extends Fragment implements CategoriesAdapter.Ca
     public interface notificadorCategories {
         public void enviarNotificacionCategories(Categories categories, Integer position);
     }
+
+
+
 }

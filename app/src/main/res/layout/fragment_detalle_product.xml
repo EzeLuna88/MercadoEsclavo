@@ -23,8 +23,8 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewImageDetalleProductFragment"
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/ViewPagerImageDetalleProductFragment"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -38,7 +38,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
                     android:src="@drawable/ic_favorite_border_black_24dp"
-                    app:layout_anchor="@id/recyclerViewImageDetalleProductFragment"
+                    app:layout_anchor="@id/ViewPagerImageDetalleProductFragment"
                     app:layout_anchorGravity="bottom | end" />
 
             </androidx.coordinatorlayout.widget.CoordinatorLayout>

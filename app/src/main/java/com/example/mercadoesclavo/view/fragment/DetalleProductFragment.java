@@ -5,6 +5,7 @@ import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,15 +16,20 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mercadoesclavo.R;
+import com.example.mercadoesclavo.adapter.ViewPagerImagenProductoAdapter;
 import com.example.mercadoesclavo.controller.CategoriesController;
 import com.example.mercadoesclavo.model.Description;
 import com.example.mercadoesclavo.model.DetalleProducto;
+import com.example.mercadoesclavo.model.Pictures;
 import com.example.mercadoesclavo.model.Results;
 import com.example.mercadoesclavo.utils.ResultListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +66,10 @@ public class DetalleProductFragment extends Fragment {
     private FirebaseAuth mAuth;
     private DetalleProducto detalleProducto;
     private Description description;
+    private List<Fragment> fragmentList = new ArrayList<>();
+    private ViewPager pager;
+    private ViewPagerImagenProductoAdapter pagerAdapter;
+
 
     public DetalleProductFragment() {
         // Required empty public constructor
@@ -96,6 +106,9 @@ public class DetalleProductFragment extends Fragment {
                         ", " + detalleProducto.getSellerAddress().getCountry().getName();
                 textViewUbicacionDetalleProductFragment.setText(ubicacion);
                 textViewGarantiaDetalleProductFragment.setText(detalleProducto.getWarranty());
+                pager = view.findViewById(R.id.ViewPagerImageDetalleProductFragment);
+                List<Pictures> picturesList = detalleProducto.getPictures();
+                cargarImagenes(picturesList);
             }
         }, id);
 
@@ -117,12 +130,15 @@ public class DetalleProductFragment extends Fragment {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     db = FirebaseFirestore.getInstance();
 
-                    if ()
+
                     db.collection(userUid).document(detalleProducto.getId()).set(detalleProducto);
                     Toast.makeText(getContext(), "fue agregado a favoritos", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+
+
 
 
         return view;
@@ -137,5 +153,14 @@ public class DetalleProductFragment extends Fragment {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
+    }
+
+    public void cargarImagenes(List<Pictures> picturesList) {
+        for (Pictures pictures : picturesList) {
+            ImagenDetalleProductoFragment imagenDetalleProductoFragment = ImagenDetalleProductoFragment.getInstance(pictures);
+            fragmentList.add(imagenDetalleProductoFragment);
+        }
+        pagerAdapter = new ViewPagerImagenProductoAdapter(getActivity().getSupportFragmentManager(), fragmentList);
+        pager.setAdapter(pagerAdapter);
     }
 }

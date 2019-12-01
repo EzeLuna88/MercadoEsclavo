@@ -60,21 +60,19 @@ public class MiPerfilFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         textViewEmailPerfil.setText(mAuth.getCurrentUser().getEmail());
-        if (mAuth.getCurrentUser().getDisplayName() != null) {
-            textViewNombrePerfil.setText(mAuth.getCurrentUser().getDisplayName());
-        } else {
-            final DocumentReference documentReference = db.collection("usuariosMercadoEsclavo").document(mAuth.getCurrentUser().getUid());
-            documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    UserMercadoEsclavo userMercadoEsclavo = documentSnapshot.toObject(UserMercadoEsclavo.class);
-                    textViewNombrePerfil.setText(userMercadoEsclavo.getNombre());
-                    textViewApellidoPerfil.setText(userMercadoEsclavo.getApellido());
-                    textViewEdadPerfil.setText(userMercadoEsclavo.getEdad());
-                    textViewTelefonoPerfil.setText(userMercadoEsclavo.getTelefono());
-                }
-            });
-        }
+
+
+        final DocumentReference documentReference = db.collection("usuariosMercadoEsclavo").document(mAuth.getCurrentUser().getUid());
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                UserMercadoEsclavo userMercadoEsclavo = documentSnapshot.toObject(UserMercadoEsclavo.class);
+                textViewNombrePerfil.setText(userMercadoEsclavo.getNombre());
+                textViewApellidoPerfil.setText(userMercadoEsclavo.getApellido());
+                textViewEdadPerfil.setText(userMercadoEsclavo.getEdad());
+                textViewTelefonoPerfil.setText(userMercadoEsclavo.getTelefono());
+            }
+        });
 
 
         return view;

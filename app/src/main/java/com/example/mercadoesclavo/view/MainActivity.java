@@ -8,25 +8,32 @@ import android.util.Base64;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.mercadoesclavo.R;
+import com.example.mercadoesclavo.adapter.ViewPagerImagenProductoAdapter;
 import com.example.mercadoesclavo.model.Categories;
 import com.example.mercadoesclavo.model.DetalleProducto;
+import com.example.mercadoesclavo.model.Pictures;
 import com.example.mercadoesclavo.model.Results;
 import com.example.mercadoesclavo.view.fragment.AboutUsFragment;
 import com.example.mercadoesclavo.view.fragment.CategoriesFragment;
 import com.example.mercadoesclavo.view.fragment.DetalleProductFragment;
 import com.example.mercadoesclavo.view.fragment.FavoritosFragment;
+import com.example.mercadoesclavo.view.fragment.ImagenDetalleProductoFragment;
 import com.example.mercadoesclavo.view.fragment.LoginFragment;
 import com.example.mercadoesclavo.view.fragment.MiPerfilFragment;
 import com.example.mercadoesclavo.view.fragment.ProductsFragment;
@@ -71,26 +78,10 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
     }
 
 
-    public void metodoNavigationView(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.navigationViewMenuPerfil:
-                Toast.makeText(MainActivity.this, "voy a mi perfil", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.navigationViewMenuFavoritos:
-                Toast.makeText(MainActivity.this, "voy a favoritos", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.navigationViewMenuCerrarSesion:
-                Toast.makeText(MainActivity.this, "cierro mi sesion", Toast.LENGTH_SHORT).show();
-                break;
-        }
-    }
-
-
     private void configurarNavigationView() {
         this.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                metodoNavigationView(menuItem);
                 switch (menuItem.getItemId()) {
                     case R.id.navigationViewMenuPerfil:
                         MiPerfilClick();
@@ -159,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.contenedorDeFragment, aboutUsFragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.addToBackStack(null).commit();
     }
 
     public void GoToLoginFragment() {
@@ -167,21 +158,22 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.contenedorDeFragment, loginFragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.addToBackStack(null).commit();
     }
 
     public void GoToFavoritosFragment() {
         FavoritosFragment favoritosFragment = new FavoritosFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.contenedorDeFragment, favoritosFragment).commit();
+        fragmentTransaction.replace(R.id.contenedorDeFragment, favoritosFragment).addToBackStack(null).commit();
     }
 
     public void GoToPerfilFragment() {
         MiPerfilFragment miPerfilFragment = new MiPerfilFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.contenedorDeFragment, miPerfilFragment).commit();
+        fragmentTransaction.replace(R.id.contenedorDeFragment, miPerfilFragment)
+                .addToBackStack(null).commit();
     }
 
     @Override
@@ -189,7 +181,8 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
         ProductsFragment productsFragment = new ProductsFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.contenedorDeFragment, productsFragment).commit();
+        fragmentTransaction.replace(R.id.contenedorDeFragment, productsFragment)
+                .addToBackStack(null).commit();
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(ProductsFragment.KEY_CATEGORIES, categories);
@@ -203,7 +196,8 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
         DetalleProductFragment detalleProductFragment = new DetalleProductFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.contenedorDeFragment, detalleProductFragment).commit();
+        fragmentTransaction.replace(R.id.contenedorDeFragment, detalleProductFragment)
+                .addToBackStack(null).commit();
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(DetalleProductFragment.KEY_DETALLE_PRODUCT, results);
@@ -235,10 +229,26 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
         System.out.println("MI KEY HASH: " + keyHash);
     }
 
+    @Override
+    public void onBackPressed() {
+
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+
+    }
 
     @Override
     public void enviarNotificacionFavoritos(DetalleProducto detalleProducto, Integer posicion) {
 
     }
+
+
+
 }
 
