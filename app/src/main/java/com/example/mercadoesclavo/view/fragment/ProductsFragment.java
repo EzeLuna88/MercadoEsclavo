@@ -73,9 +73,9 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                Integer posicionActual = layoutManager.findFirstVisibleItemPosition();
+                Integer posicionActual = layoutManager.findLastVisibleItemPosition();
                 Integer ultimaCelda = layoutManager.getItemCount();
-                if (posicionActual.equals(ultimaCelda - 10)) {
+                if (posicionActual.equals(ultimaCelda - 11)) {
                     getProducts(recyclerView, id, categoriesController);
                 }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +28,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,9 +41,7 @@ public class FavoritosFragment extends Fragment implements FavoritosAdapter.Favo
 
 
     private FirebaseAuth mAuth;
-
     private notificadorFavoritos notificadorFavoritos;
-
     @BindView(R.id.progressBarFullScreen)
     ProgressBar progressBar;
 
@@ -76,16 +76,36 @@ public class FavoritosFragment extends Fragment implements FavoritosAdapter.Favo
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        List<DetalleProducto> detalleProductoList = new ArrayList<>();
+                        final List<DetalleProducto> detalleProductoList = new ArrayList<>();
                         for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
                             DetalleProducto detalleProducto = queryDocumentSnapshot.toObject(DetalleProducto.class);
                             detalleProductoList.add(detalleProducto);
                             RecyclerView recyclerView = view.findViewById(R.id.recyclerViewFavoritos);
                             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                             recyclerView.setLayoutManager(layoutManager);
-                            FavoritosAdapter favoritosAdapter = new FavoritosAdapter(detalleProductoList, FavoritosFragment.this);
+                            final FavoritosAdapter favoritosAdapter = new FavoritosAdapter(detalleProductoList, FavoritosFragment.this);
                             recyclerView.setAdapter(favoritosAdapter);
                             progressBar.setVisibility(View.INVISIBLE);
+
+                            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+                                @Override
+                                public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder dragged, @NonNull RecyclerView.ViewHolder target) {
+                                    Integer position_dragged = dragged.getAdapterPosition();
+                                    Integer position_target = target.getAdapterPosition();
+
+                                    Collections.swap(detalleProductoList, position_dragged, position_target);
+
+                                    favoritosAdapter.notifyItemMoved(position_dragged, position_target);
+
+                                    return false;
+                                }
+
+                                @Override
+                                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                                }
+                            });
+                            itemTouchHelper.attachToRecyclerView(recyclerView);
                         }
                     }
                 });

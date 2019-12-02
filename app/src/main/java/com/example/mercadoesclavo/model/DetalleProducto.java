@@ -2,9 +2,10 @@ package com.example.mercadoesclavo.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class DetalleProducto {
+public class DetalleProducto implements Serializable {
 
     @SerializedName("id")
     private String id;
@@ -32,6 +33,16 @@ public class DetalleProducto {
     private SellerAddress sellerAddress;
     @SerializedName("warranty")
     private String warranty;
+    @SerializedName("geolocation")
+    private Geolocation geolocation;
+
+    public Geolocation getGeolocation() {
+        return geolocation;
+    }
+
+    public void setGeolocationList(Geolocation geolocation) {
+        this.geolocation = geolocation;
+    }
 
     public String getId() {
         return id;
@@ -139,7 +150,7 @@ public class DetalleProducto {
 
     public DetalleProducto(String id, String title, String sellerId, Double price, Integer initialQuantity,
                            Integer availableQuantity, String buyingMode, String condition, String thumbnail,
-                           String secureThumbnail, List<Pictures> pictures, SellerAddress sellerAddress, String warranty) {
+                           String secureThumbnail, List<Pictures> pictures, SellerAddress sellerAddress, String warranty, List<Geolocation> geolocationList) {
         this.id = id;
         this.title = title;
         this.sellerId = sellerId;
@@ -153,6 +164,7 @@ public class DetalleProducto {
         this.pictures = pictures;
         this.sellerAddress = sellerAddress;
         this.warranty = warranty;
+        this.geolocation = geolocation;
     }
 
     public DetalleProducto() {

@@ -5,6 +5,8 @@ import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -21,12 +23,16 @@ import com.example.mercadoesclavo.adapter.ViewPagerImagenProductoAdapter;
 import com.example.mercadoesclavo.controller.CategoriesController;
 import com.example.mercadoesclavo.model.Description;
 import com.example.mercadoesclavo.model.DetalleProducto;
+import com.example.mercadoesclavo.model.Geolocation;
 import com.example.mercadoesclavo.model.Pictures;
 import com.example.mercadoesclavo.model.Results;
 import com.example.mercadoesclavo.utils.ResultListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -88,13 +94,13 @@ public class DetalleProductFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         progressBar.setVisibility(View.VISIBLE);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         Bundle bundle = getArguments();
         Results results = (Results) bundle.getSerializable(KEY_DETALLE_PRODUCT);
 
-        String id = results.getId();
+        final String id = results.getId();
         getDetalleProductos(view, id);
 
 
@@ -109,7 +115,19 @@ public class DetalleProductFragment extends Fragment {
 
 
                     db.collection(userUid).document(detalleProducto.getId()).set(detalleProducto);
+                    floatingActionButton.setImageResource(R.drawable.ic_favorite_white_24dp);
                     Toast.makeText(getContext(), "fue agregado a favoritos", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        DocumentReference documentReference = db.collection(mAuth.getUid()).document(id);
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    floatingActionButton.setImageResource(R.drawable.ic_favorite_white_24dp);
                 }
             }
         });
@@ -141,6 +159,14 @@ public class DetalleProductFragment extends Fragment {
                 pager = view.findViewById(R.id.ViewPagerImageDetalleProductFragment);
                 List<Pictures> picturesList = detalleProducto.getPictures();
                 cargarImagenes(picturesList);
+
+                MapsFragment mapsFragment = new MapsFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(MapsFragment.KEY_POSICION, detalleProducto);
+                mapsFragment.setArguments(bundle);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.contenedorDeMapa, mapsFragment).commit();
             }
         }, id);
 
@@ -173,4 +199,17 @@ public class DetalleProductFragment extends Fragment {
         pager.setAdapter(pagerAdapter);
         progressBar.setVisibility(View.INVISIBLE);
     }
+
+    /*public void getMap(){
+        MapsFragment mapsFragment = new MapsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(MapsFragment.KEY_POSICION, detalleProducto);
+        mapsFragment.setArguments(bundle);
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.contenedorDeMapa, mapsFragment).commit();
+
+
+
+    }*/
 }
