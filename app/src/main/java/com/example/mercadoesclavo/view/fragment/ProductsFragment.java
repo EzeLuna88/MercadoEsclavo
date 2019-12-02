@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.adapter.ProductoAdapter;
@@ -25,6 +26,9 @@ import com.example.mercadoesclavo.utils.ResultListener;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -35,6 +39,8 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
     private Producto producto;
     private List<Results> productoList;
     private notificadorProducto notificadorProducto;
+    @BindView(R.id.progressBarFullScreen)
+    ProgressBar progressBar;
 
     public ProductsFragment() {
         // Required empty public constructor
@@ -51,7 +57,7 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_products, container, false);
-
+        ButterKnife.bind(this, view);
         Bundle bundle = getArguments();
         Categories category = (Categories) bundle.getSerializable(KEY_CATEGORIES);
 
@@ -63,8 +69,6 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
         final String id = category.getId();
         final CategoriesController categoriesController = new CategoriesController();
         getProducts(recyclerView, id, categoriesController);
-
-
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -83,6 +87,7 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
     }
 
     private void getProducts(final RecyclerView recyclerView, String id, CategoriesController categoriesController) {
+        progressBar.setVisibility(View.VISIBLE);
         if (categoriesController.getHayMasProductos()) {
             categoriesController.getProductos(new ResultListener<Producto>() {
                 @Override
@@ -95,6 +100,7 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
                     }
                     ProductoAdapter productoAdapter = new ProductoAdapter(productoList, ProductsFragment.this);
                     recyclerView.setAdapter(productoAdapter);
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
             }, id);
         }

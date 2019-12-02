@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +64,8 @@ public class DetalleProductFragment extends Fragment {
     TextView textViewDescripcionDetalleProductFragment;
     @BindView(R.id.floatingButton)
     FloatingActionButton floatingActionButton;
+    @BindView(R.id.progressBarFullScreen)
+    ProgressBar progressBar;
     private FirebaseAuth mAuth;
     private DetalleProducto detalleProducto;
     private Description description;
@@ -83,6 +86,8 @@ public class DetalleProductFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_detalle_product, container, false);
         ButterKnife.bind(this, view);
         mAuth = FirebaseAuth.getInstance();
+        progressBar.setVisibility(View.VISIBLE);
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -90,10 +95,37 @@ public class DetalleProductFragment extends Fragment {
         Results results = (Results) bundle.getSerializable(KEY_DETALLE_PRODUCT);
 
         String id = results.getId();
+        getDetalleProductos(view, id);
+
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                if (currentUser != null) {
+                    String userUid = mAuth.getCurrentUser().getUid();
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db = FirebaseFirestore.getInstance();
+
+
+                    db.collection(userUid).document(detalleProducto.getId()).set(detalleProducto);
+                    Toast.makeText(getContext(), "fue agregado a favoritos", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        return view;
+
+
+    }
+
+    private void getDetalleProductos(final View view, String id) {
         CategoriesController categoriesController = new CategoriesController();
         categoriesController.getDetalleProducto(new ResultListener<DetalleProducto>() {
             @Override
             public void onFinish(DetalleProducto result) {
+
                 detalleProducto = result;
 //                Glide.with(view).load(detalleProducto.getSecureThumbnail()).into(imageViewCardViewDetalleProductFragment);
                 textViewTitleDetalleProductFragment.setText(detalleProducto.getTitle());
@@ -120,30 +152,6 @@ public class DetalleProductFragment extends Fragment {
             }
         }, id);
 
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                if (currentUser != null) {
-                    String userUid = mAuth.getCurrentUser().getUid();
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db = FirebaseFirestore.getInstance();
-
-
-                    db.collection(userUid).document(detalleProducto.getId()).set(detalleProducto);
-                    Toast.makeText(getContext(), "fue agregado a favoritos", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-
-
-
-
-        return view;
-
-
     }
 
 
@@ -152,6 +160,7 @@ public class DetalleProductFragment extends Fragment {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
 
     }
 
@@ -162,5 +171,6 @@ public class DetalleProductFragment extends Fragment {
         }
         pagerAdapter = new ViewPagerImagenProductoAdapter(getActivity().getSupportFragmentManager(), fragmentList);
         pager.setAdapter(pagerAdapter);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }

@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:backgroundTint="@color/colorPrimary">
+    android:backgroundTint="@color/icons">
 
     <androidx.cardview.widget.CardView
         app:cardUseCompatPadding="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorClaro"
+        android:backgroundTint="@color/icons"
         android:elevation="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +25,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="+"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/primary_dark"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -39,7 +39,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="Categoria"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/primary_text"
                 android:textSize="20dp"
                 android:layout_marginLeft="30dp"
                 app:layout_constraintLeft_toRightOf="@id/signoMas"

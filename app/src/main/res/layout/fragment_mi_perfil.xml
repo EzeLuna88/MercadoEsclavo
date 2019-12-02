@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorClaro"
+    android:background="@color/icons"
     android:paddingLeft="20dp"
     tools:context=".view.fragment.MiPerfilFragment">
 
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:text="@string/Email"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/primary_text"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/secondary_text"
         android:textSize="20dp"
         app:layout_constraintLeft_toRightOf="@id/email"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="15dp"
         android:text="@string/Nombre"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/primary_text"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -52,7 +52,7 @@
         android:id="@+id/textViewNombrePerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/secondary_text"
         android:textSize="20dp"
         app:layout_constraintLeft_toRightOf="@id/nombre"
         app:layout_constraintTop_toBottomOf="@id/textViewEmailPerfil" />
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="15dp"
         android:text="@string/Apellido"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/primary_text"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -75,7 +75,7 @@
         android:id="@+id/textViewApellidoPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/secondary_text"
         android:textSize="20dp"
         app:layout_constraintLeft_toRightOf="@id/apellido"
         app:layout_constraintTop_toBottomOf="@id/textViewNombrePerfil" />
@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="15dp"
         android:text="@string/Edad"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/primary_text"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -98,7 +98,7 @@
         android:id="@+id/textViewEdadPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/secondary_text"
         android:textSize="20dp"
         app:layout_constraintLeft_toRightOf="@id/edad"
         app:layout_constraintTop_toBottomOf="@id/textViewApellidoPerfil" />
@@ -111,7 +111,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="15dp"
         android:text="@string/Telefono"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/primary_text"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -121,11 +121,12 @@
         android:id="@+id/textViewTelefonoPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/secondary_text"
         android:textSize="20dp"
         android:paddingTop="15dp"
         app:layout_constraintLeft_toRightOf="@id/telefono"
         app:layout_constraintTop_toBottomOf="@id/textViewEdadPerfil" />
 
+    <include layout="@layout/progress_bar"></include>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

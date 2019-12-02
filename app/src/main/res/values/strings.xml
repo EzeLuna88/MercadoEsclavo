@@ -24,5 +24,7 @@
     <string name="descripcion">Descripcion </string>
     <string name="facebook_app_id">445065646425419</string>
     <string name="fb_login_protocol_scheme">fb445065646425419</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
 
 </resources>

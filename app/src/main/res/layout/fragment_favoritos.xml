@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.fragment.FavoritosFragment"
-    android:background="@color/colorClaro">
+    android:background="@color/primary_light">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerViewFavoritos"/>
+
+    <include layout="@layout/progress_bar"></include>
 
 </FrameLayout>

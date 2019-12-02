@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
     @BindView(R.id.drawerLayoutMain)
     DrawerLayout drawerLayout;
     private FirebaseAuth mAuth;
+    @BindView(R.id.toolbarMainActivity)
+    Toolbar toolbar;
 
 
     @Override
@@ -70,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
         fragmentTransaction.replace(R.id.contenedorDeFragment, categoriesFragment);
         fragmentTransaction.commit();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMainActivity);
-        setSupportActionBar(toolbar);
 
         configurarNavigationView();
 
@@ -105,6 +106,16 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
                 return false;
             }
         });
+    }
+
+    public void setToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle("Mercado Esclavo");
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        drawerLayout.closeDrawers();
     }
 
     public void IniciarSesionClick() {
@@ -247,7 +258,6 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
     public void enviarNotificacionFavoritos(DetalleProducto detalleProducto, Integer posicion) {
 
     }
-
 
 
 }

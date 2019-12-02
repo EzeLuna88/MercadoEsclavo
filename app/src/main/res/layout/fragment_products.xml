@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.ProductsFragment"
-    android:background="@color/colorPrimary">
+    android:background="@color/icons"
+    tools:context=".view.fragment.ProductsFragment">
+
+
+
 
     <TextView
         android:id="@+id/textViewProductsFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@color/primary_light"
         android:textSize="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,9 +23,10 @@
         android:id="@+id/recyclerViewMainFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@id/textViewProductsFragment"
+        android:background="@color/primary_light"
         app:layout_constraintLeft_toLeftOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/textViewProductsFragment" />
+
+   <include layout="@layout/progress_bar"></include>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

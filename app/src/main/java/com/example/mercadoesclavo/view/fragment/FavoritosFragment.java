@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.adapter.FavoritosAdapter;
@@ -29,17 +30,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoritosFragment extends Fragment implements FavoritosAdapter.FavoritosAdapterListener{
-
+public class FavoritosFragment extends Fragment implements FavoritosAdapter.FavoritosAdapterListener {
 
 
     private FirebaseAuth mAuth;
 
     private notificadorFavoritos notificadorFavoritos;
+
+    @BindView(R.id.progressBarFullScreen)
+    ProgressBar progressBar;
 
     public FavoritosFragment() {
         // Required empty public constructor
@@ -56,9 +60,17 @@ public class FavoritosFragment extends Fragment implements FavoritosAdapter.Favo
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_favoritos, container, false);
+        ButterKnife.bind(this, view);
         mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        getFavoritos(view, db);
 
+
+        return view;
+    }
+
+    private void getFavoritos(final View view, FirebaseFirestore db) {
+        progressBar.setVisibility(View.VISIBLE);
         db.collection(mAuth.getCurrentUser().getUid())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -73,17 +85,10 @@ public class FavoritosFragment extends Fragment implements FavoritosAdapter.Favo
                             recyclerView.setLayoutManager(layoutManager);
                             FavoritosAdapter favoritosAdapter = new FavoritosAdapter(detalleProductoList, FavoritosFragment.this);
                             recyclerView.setAdapter(favoritosAdapter);
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     }
                 });
-
-
-
-
-
-
-
-        return view;
     }
 
     @Override
@@ -91,6 +96,7 @@ public class FavoritosFragment extends Fragment implements FavoritosAdapter.Favo
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
 
 
     }
