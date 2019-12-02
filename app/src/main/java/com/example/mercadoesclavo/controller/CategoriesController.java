@@ -66,4 +66,13 @@ public class CategoriesController {
             }
         }, id);
     }
+
+    public void getProductosBusqueda(final ResultListener<Producto> viewController, String id){
+        mercadoLibreDao.getProductosBusqueda(new ResultListener<Producto>() {
+            @Override
+            public void onFinish(Producto result) {
+                viewController.onFinish(result);
+            }
+        }, id);
+    }
 }

@@ -3,12 +3,13 @@ package com.example.mercadoesclavo.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class Producto {
+public class Producto implements Serializable {
 
     @SerializedName("results")
     private List<Results> results;

@@ -34,4 +34,11 @@ public interface MercadoLibreService {
             @Path("id")
                     String id);
 
+    @GET("/sites/MLA/search?")
+    Call<Producto> getProductosBusqueda(
+            @Query("q") String key);
+
+
+
+
 }

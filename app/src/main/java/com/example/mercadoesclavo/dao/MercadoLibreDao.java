@@ -24,7 +24,6 @@ public class MercadoLibreDao {
     private MercadoLibreService mercadoLibreService;
 
 
-
     public MercadoLibreDao() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -97,5 +96,22 @@ public class MercadoLibreDao {
                 t.printStackTrace();
             }
         });
+    }
+
+
+    public void getProductosBusqueda(final ResultListener<Producto> controllerListener, String id) {
+        Call<Producto> call = mercadoLibreService.getProductosBusqueda(id);
+        call.enqueue((new Callback<Producto>() {
+            @Override
+            public void onResponse(Call<Producto> call, Response<Producto> response) {
+                Producto producto = response.body();
+                controllerListener.onFinish(producto);
+            }
+
+            @Override
+            public void onFailure(Call<Producto> call, Throwable t) {
+                t.printStackTrace();
+            }
+        }));
     }
 }

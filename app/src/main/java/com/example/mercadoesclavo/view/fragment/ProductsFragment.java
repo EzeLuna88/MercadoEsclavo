@@ -24,6 +24,7 @@ import com.example.mercadoesclavo.model.Producto;
 import com.example.mercadoesclavo.model.Results;
 import com.example.mercadoesclavo.utils.ResultListener;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,7 +36,7 @@ import butterknife.ButterKnife;
 public class ProductsFragment extends Fragment implements ProductoAdapter.ProductoAdapterListener {
 
     public static final String KEY_CATEGORIES = "categories";
-    public static final String KEY_POSITION = "position";
+
     private Producto producto;
     private List<Results> productoList;
     private notificadorProducto notificadorProducto;
@@ -59,10 +60,9 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
         View view = inflater.inflate(R.layout.fragment_products, container, false);
         ButterKnife.bind(this, view);
         Bundle bundle = getArguments();
+
+
         Categories category = (Categories) bundle.getSerializable(KEY_CATEGORIES);
-
-        String title = category.getName();
-
         final RecyclerView recyclerView = view.findViewById(R.id.recyclerViewMainFragment);
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

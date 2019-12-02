@@ -1,5 +1,7 @@
 package com.example.mercadoesclavo.view;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -14,6 +16,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -21,22 +24,28 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.adapter.ViewPagerImagenProductoAdapter;
+import com.example.mercadoesclavo.controller.CategoriesController;
 import com.example.mercadoesclavo.model.Categories;
 import com.example.mercadoesclavo.model.DetalleProducto;
 import com.example.mercadoesclavo.model.Pictures;
+import com.example.mercadoesclavo.model.Producto;
 import com.example.mercadoesclavo.model.Results;
+import com.example.mercadoesclavo.utils.ResultListener;
 import com.example.mercadoesclavo.view.fragment.AboutUsFragment;
+import com.example.mercadoesclavo.view.fragment.BusquedaFragment;
 import com.example.mercadoesclavo.view.fragment.CategoriesFragment;
 import com.example.mercadoesclavo.view.fragment.DetalleProductFragment;
 import com.example.mercadoesclavo.view.fragment.FavoritosFragment;
 import com.example.mercadoesclavo.view.fragment.ImagenDetalleProductoFragment;
 import com.example.mercadoesclavo.view.fragment.LoginFragment;
 import com.example.mercadoesclavo.view.fragment.MiPerfilFragment;
+import com.example.mercadoesclavo.view.fragment.NoResultsFragment;
 import com.example.mercadoesclavo.view.fragment.ProductsFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -72,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.contenedorDeFragment, categoriesFragment);
         fragmentTransaction.commit();
-
+        setToolbar();
 
         configurarNavigationView();
 
@@ -259,6 +268,55 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) menu.findItem(R.id.itemToolBarBuscar).getActionView();
+        MenuItem searchMenuItem = menu.findItem(R.id.itemToolBarBuscar);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String key) {
+                search(key);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+        return true;
+    }
+
+    public void search(final String key) {
+        CategoriesController categoriesController = new CategoriesController();
+        categoriesController.getProductosBusqueda(new ResultListener<Producto>() {
+            @Override
+            public void onFinish(Producto result) {
+                Producto producto = result;
+                if (producto.getResults().size() > 0) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(BusquedaFragment.KEY_PRODUCTOS, result);
+                    BusquedaFragment busquedaFragment = new BusquedaFragment();
+                    busquedaFragment.setArguments(bundle);
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.contenedorDeFragment, busquedaFragment);
+                    fragmentTransaction.commit();
+                } else {
+                    NoResultsFragment noResultsFragment = new NoResultsFragment();
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.contenedorDeFragment, noResultsFragment).commit();
+                }
+            }
+        }, key);
+    }
+
+
+
 
 }
-

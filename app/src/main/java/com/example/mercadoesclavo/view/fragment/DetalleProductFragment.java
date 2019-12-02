@@ -121,17 +121,18 @@ public class DetalleProductFragment extends Fragment {
             }
         });
 
-
-        DocumentReference documentReference = db.collection(mAuth.getUid()).document(id);
-        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-                    floatingActionButton.setImageResource(R.drawable.ic_favorite_white_24dp);
+        if (currentUser != null) {
+            DocumentReference documentReference = db.collection(mAuth.getUid()).document(id);
+            documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()) {
+                        floatingActionButton.setImageResource(R.drawable.ic_favorite_white_24dp);
+                    }
                 }
-            }
-        });
+            });
 
+        }
 
         return view;
 
@@ -174,7 +175,9 @@ public class DetalleProductFragment extends Fragment {
             @Override
             public void onFinish(Description result) {
                 description = result;
-                textViewDescripcionDetalleProductFragment.setText(description.getPlaintText());
+                if (description != null) {
+                    textViewDescripcionDetalleProductFragment.setText(description.getPlaintText());
+                }
             }
         }, id);
 
@@ -200,16 +203,5 @@ public class DetalleProductFragment extends Fragment {
         progressBar.setVisibility(View.INVISIBLE);
     }
 
-    /*public void getMap(){
-        MapsFragment mapsFragment = new MapsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(MapsFragment.KEY_POSICION, detalleProducto);
-        mapsFragment.setArguments(bundle);
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.contenedorDeMapa, mapsFragment).commit();
 
-
-
-    }*/
 }
