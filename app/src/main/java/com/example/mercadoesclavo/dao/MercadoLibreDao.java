@@ -23,6 +23,8 @@ public class MercadoLibreDao {
     private Retrofit retrofit;
     private MercadoLibreService mercadoLibreService;
 
+
+
     public MercadoLibreDao() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -49,8 +51,8 @@ public class MercadoLibreDao {
         });
     }
 
-    public void getProductos(final ResultListener<Producto> controllerListener, String id) {
-        Call<Producto> call = mercadoLibreService.getProductos(id);
+    public void getProductos(final ResultListener<Producto> controllerListener, String id, Integer offset, Integer limit) {
+        Call<Producto> call = mercadoLibreService.getProductos(id, offset, limit);
         call.enqueue(new Callback<Producto>() {
             @Override
             public void onResponse(Call<Producto> call, Response<Producto> response) {

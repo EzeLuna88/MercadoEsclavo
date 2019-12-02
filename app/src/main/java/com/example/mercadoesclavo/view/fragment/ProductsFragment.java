@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -56,25 +58,46 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
         String title = category.getName();
 
         final RecyclerView recyclerView = view.findViewById(R.id.recyclerViewMainFragment);
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        String id = category.getId();
-        CategoriesController categoriesController = new CategoriesController();
-        categoriesController.getProductos(new ResultListener<Producto>() {
-            @Override
-            public void onFinish(Producto result) {
-                producto = result;
-                productoList = result.getResults();
-                ProductoAdapter productoAdapter = new ProductoAdapter(productoList, ProductsFragment.this);
-                recyclerView.setAdapter(productoAdapter);
+        final String id = category.getId();
+        final CategoriesController categoriesController = new CategoriesController();
+        getProducts(recyclerView, id, categoriesController);
 
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Integer posicionActual = layoutManager.findFirstVisibleItemPosition();
+                Integer ultimaCelda = layoutManager.getItemCount();
+                if (posicionActual.equals(ultimaCelda - 10)) {
+                    getProducts(recyclerView, id, categoriesController);
+                }
 
             }
-        }, id);
-
+        });
 
         return view;
 
+    }
+
+    private void getProducts(final RecyclerView recyclerView, String id, CategoriesController categoriesController) {
+        if (categoriesController.getHayMasProductos()) {
+            categoriesController.getProductos(new ResultListener<Producto>() {
+                @Override
+                public void onFinish(Producto result) {
+                    producto = result;
+                    if (productoList == null) {
+                        productoList = result.getResults();
+                    } else {
+                        productoList.addAll(result.getResults());
+                    }
+                    ProductoAdapter productoAdapter = new ProductoAdapter(productoList, ProductsFragment.this);
+                    recyclerView.setAdapter(productoAdapter);
+                }
+            }, id);
+        }
     }
 
 

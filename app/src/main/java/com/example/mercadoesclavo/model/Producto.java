@@ -17,6 +17,8 @@ public class Producto {
         return results;
     }
 
+
+
     public void setResults(List<Results> results) {
         this.results = results;
     }

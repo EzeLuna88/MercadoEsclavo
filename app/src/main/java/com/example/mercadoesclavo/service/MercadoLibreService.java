@@ -19,8 +19,9 @@ public interface MercadoLibreService {
 
     @GET("/sites/MLA/search?category=")
     Call<Producto> getProductos(
-            @Query("category")
-                    String id
+            @Query("category") String id,
+            @Query("offset") Integer offset,
+            @Query("limit") Integer limit
     );
 
     @GET("/items/{id}")
@@ -31,6 +32,6 @@ public interface MercadoLibreService {
     @GET("/items/{id}/description")
     Call<Description> getDescription(
             @Path("id")
-    String id);
+                    String id);
 
 }

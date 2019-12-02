@@ -14,6 +14,10 @@ import javax.xml.transform.Result;
 public class CategoriesController {
 
     private MercadoLibreDao mercadoLibreDao;
+    private Integer offset = 0;
+    private Integer limit = 50;
+    private Boolean hayMasProductos = true;
+
 
     public CategoriesController() {
         this.mercadoLibreDao = new MercadoLibreDao();
@@ -32,9 +36,17 @@ public class CategoriesController {
         mercadoLibreDao.getProductos(new ResultListener<Producto>() {
             @Override
             public void onFinish(Producto result) {
+                if (result.getResults().size()<limit){
+                    hayMasProductos = false;
+                }
+                offset = offset + limit;
                 viewController.onFinish(result);
             }
-        }, id);
+        }, id, offset, limit);
+    }
+
+    public Boolean getHayMasProductos(){
+        return hayMasProductos;
     }
 
     public void getDetalleProducto(final ResultListener<DetalleProducto> viewController, String id) {
