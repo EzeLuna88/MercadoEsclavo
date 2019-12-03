@@ -2,7 +2,9 @@ package com.example.mercadoesclavo.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class SellerAddress {
+import java.io.Serializable;
+
+public class SellerAddress implements Serializable {
 
 
     @SerializedName("city")

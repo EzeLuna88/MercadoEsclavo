@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.model.UserMercadoEsclavo;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,8 +41,6 @@ public class MiPerfilFragment extends Fragment {
     TextView textViewEmailPerfil;
     @BindView(R.id.textViewNombrePerfil)
     TextView textViewNombrePerfil;
-    @BindView(R.id.textViewApellidoPerfil)
-    TextView textViewApellidoPerfil;
     @BindView(R.id.textViewEdadPerfil)
     TextView textViewEdadPerfil;
     @BindView(R.id.textViewTelefonoPerfil)
@@ -48,6 +48,8 @@ public class MiPerfilFragment extends Fragment {
     private FirebaseAuth mAuth;
     @BindView(R.id.progressBarFullScreen)
     ProgressBar progressBar;
+    @BindView(R.id.imageViewImageViewPerfil)
+    ImageView imageViewPerfil;
 
     public MiPerfilFragment() {
         // Required empty public constructor
@@ -63,22 +65,27 @@ public class MiPerfilFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        textViewEmailPerfil.setText(mAuth.getCurrentUser().getEmail());
 
-
-        final DocumentReference documentReference = db.collection("usuariosMercadoEsclavo").document(mAuth.getCurrentUser().getUid());
-        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                UserMercadoEsclavo userMercadoEsclavo = documentSnapshot.toObject(UserMercadoEsclavo.class);
-                textViewNombrePerfil.setText(userMercadoEsclavo.getNombre());
-                textViewApellidoPerfil.setText(userMercadoEsclavo.getApellido());
-                textViewEdadPerfil.setText(userMercadoEsclavo.getEdad());
-                textViewTelefonoPerfil.setText(userMercadoEsclavo.getTelefono());
-                progressBar.setVisibility(View.INVISIBLE);
-            }
-        });
-
+        textViewNombrePerfil.setText(mAuth.getCurrentUser().getDisplayName());
+        if (textViewNombrePerfil.length() > 0) {
+            Glide.with(view).load(mAuth.getCurrentUser().getPhotoUrl()).into(imageViewPerfil);
+            textViewEmailPerfil.setText(mAuth.getCurrentUser().getEmail());
+            textViewTelefonoPerfil.setText(mAuth.getCurrentUser().getPhoneNumber().toString());
+            progressBar.setVisibility(View.INVISIBLE);
+        } else {
+            final DocumentReference documentReference = db.collection("usuariosMercadoEsclavo").document(mAuth.getCurrentUser().getUid());
+            documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    UserMercadoEsclavo userMercadoEsclavo = documentSnapshot.toObject(UserMercadoEsclavo.class);
+                    textViewEmailPerfil.setText(mAuth.getCurrentUser().getEmail());
+                    textViewNombrePerfil.setText(userMercadoEsclavo.getNombre() + " " + userMercadoEsclavo.getApellido());
+                    textViewEdadPerfil.setText(userMercadoEsclavo.getEdad());
+                    textViewTelefonoPerfil.setText(userMercadoEsclavo.getTelefono());
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            });
+        }
 
         return view;
     }

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -23,8 +22,8 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/ViewPagerImageDetalleProductFragment"
+                <ImageView
+                    android:id="@+id/ImagenDetalleBusquedaFragment"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:background="@color/icons"
@@ -40,14 +39,14 @@
                     android:layout_marginBottom="10dp"
                     android:backgroundTint="@color/accent"
                     android:src="@drawable/ic_favorite_border_white_24dp"
-                    app:layout_anchor="@id/ViewPagerImageDetalleProductFragment"
+                    app:layout_anchor="@id/ImagenDetalleBusquedaFragment"
                     app:layout_anchorGravity="bottom | end" />
 
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewDetalleProductFragment"
+                android:id="@+id/cardViewDetalleBusquedaFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/icons"
@@ -59,7 +58,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textViewTitleDetalleProductFragment"
+                        android:id="@+id/textViewTitleDetalleBusquedaFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -78,10 +77,10 @@
                         android:layout_marginLeft="10dp"
                         android:src="@drawable/ic_attach_money_black_24dp"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textViewTitleDetalleProductFragment" />
+                        app:layout_constraintTop_toBottomOf="@id/textViewTitleDetalleBusquedaFragment" />
 
                     <TextView
-                        android:id="@+id/textViewPriceDetalleProductFragment"
+                        android:id="@+id/textViewPriceDetalleBusquedaFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -92,20 +91,20 @@
                         android:textSize="25dp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@id/imagenSignoPesos"
-                        app:layout_constraintTop_toBottomOf="@id/textViewTitleDetalleProductFragment" />
+                        app:layout_constraintTop_toBottomOf="@id/textViewTitleDetalleBusquedaFragment" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardView2DetalleProductFragment"
+                android:id="@+id/cardView2DetalleBusquedaFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/icons"
                 app:cardElevation="10dp"
-                app:layout_constraintTop_toBottomOf="@id/cardViewDetalleProductFragment">
+                app:layout_constraintTop_toBottomOf="@id/cardViewDetalleBusquedaFragment">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -126,7 +125,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textViewCantidadDetalleProductFragment"
+                        android:id="@+id/textViewCantidadDetalleBusquedaFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"
@@ -148,26 +147,26 @@
                         app:layout_constraintTop_toBottomOf="@id/textViewTituloCantidad" />
 
                     <TextView
-                        android:id="@+id/textViewDisponibleDetalleProductFragment"
+                        android:id="@+id/textViewDisponibleDetalleBusquedaFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
                         android:textColor="@color/secondary_text"
                         app:layout_constraintLeft_toRightOf="@id/textViewTituloDisponible"
-                        app:layout_constraintTop_toBottomOf="@id/textViewCantidadDetalleProductFragment" />
+                        app:layout_constraintTop_toBottomOf="@id/textViewCantidadDetalleBusquedaFragment" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardView3DetalleProductFragment"
+                android:id="@+id/cardView3DetalleBusquedaFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/icons"
                 app:cardElevation="10dp"
-                app:layout_constraintTop_toBottomOf="@id/cardView2DetalleProductFragment">
+                app:layout_constraintTop_toBottomOf="@id/cardView2DetalleBusquedaFragment">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -187,7 +186,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textViewTipoDeCompraDetalleProductFragment"
+                        android:id="@+id/textViewTipoDeCompraDetalleBusquedaFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"
@@ -209,16 +208,16 @@
                         app:layout_constraintTop_toBottomOf="@id/textViewTituloTipoDeCompra" />
 
                     <TextView
-                        android:id="@+id/textViewCondicionDetalleProductFragment"
+                        android:id="@+id/textViewCondicionDetalleBusquedaFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
                         android:textColor="@color/secondary_text"
                         app:layout_constraintLeft_toRightOf="@id/textViewTituloCondicion"
-                        app:layout_constraintTop_toBottomOf="@id/textViewTipoDeCompraDetalleProductFragment" />
+                        app:layout_constraintTop_toBottomOf="@id/textViewTipoDeCompraDetalleBusquedaFragment" />
 
                     <TextView
-                        android:id="@+id/textViewGarantiaDetalleProductFragment"
+                        android:id="@+id/textViewGarantiaDetalleBusquedaFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -235,13 +234,13 @@
 
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardView4DetalleProductFragment"
+                android:id="@+id/cardView4DetalleBusquedaFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/icons"
                 app:cardElevation="10dp"
-                app:layout_constraintTop_toBottomOf="@id/cardView3DetalleProductFragment">
+                app:layout_constraintTop_toBottomOf="@id/cardView3DetalleBusquedaFragment">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -272,7 +271,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textViewUbicacionDetalleProductFragment"
+                        android:id="@+id/textViewUbicacionDetalleBusquedaFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
@@ -285,22 +284,22 @@
                         android:id="@+id/contenedorDeMapa"
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
-                        android:orientation="vertical"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textViewUbicacionDetalleProductFragment" />
+                        app:layout_constraintTop_toBottomOf="@id/textViewUbicacionDetalleBusquedaFragment"
+                        android:orientation="vertical" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardView5DetalleProductFragment"
+                android:id="@+id/cardView5DetalleBusquedaFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/icons"
                 app:cardElevation="10dp"
-                app:layout_constraintTop_toBottomOf="@id/cardView4DetalleProductFragment">
+                app:layout_constraintTop_toBottomOf="@id/cardView4DetalleBusquedaFragment">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -320,7 +319,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textViewDescripcionDetalleProductFragment"
+                        android:id="@+id/textViewDescripcionDetalleBusquedaFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
@@ -333,80 +332,10 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView6DetalleProductFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:backgroundTint="@color/icons"
-                app:cardElevation="10dp"
-                app:layout_constraintTop_toBottomOf="@id/cardView5DetalleProductFragment">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textViewTituloComentarios"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:text="@string/Comentarios"
-                        android:textColor="@color/primary_text"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/RecyclerViewComentariosDetalleProductFragment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="200dp"
-                        android:paddingBottom="10dp"
-                        android:textColor="@color/secondary_text"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textViewTituloComentarios" />
-
-                    <androidx.cardview.widget.CardView
-                        android:visibility="gone"
-                        android:id="@+id/cardView7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/primary_light"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/RecyclerViewComentariosDetalleProductFragment">
-
-                        <EditText
-                            android:id="@+id/editTextComentariosProductFragment"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="agregar comentario" />
-
-
-                    </androidx.cardview.widget.CardView>
-
-                    <ImageButton
-                        android:visibility="gone"
-                        android:id="@+id/sendButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_send_black_24dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/RecyclerViewComentariosDetalleProductFragment" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
-
-
     <include layout="@layout/progress_bar"></include>
 </androidx.constraintlayout.widget.ConstraintLayout>
-

@@ -28,5 +28,6 @@
     <string name="close_drawer">Close Drawer</string>
     <string name="title_activity_maps">Google Maps</string>
     <string name="Buscar">Buscar</string>
+    <string name="Comentarios">Comentarios</string>
 
 </resources>

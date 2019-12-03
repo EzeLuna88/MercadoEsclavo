@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 
 public class BusquedaAdapter extends RecyclerView.Adapter {
 
+    private Producto producto;
     private List<Results> resultsList;
     private BusquedaAdapterListener listener;
 
@@ -70,7 +71,7 @@ public class BusquedaAdapter extends RecyclerView.Adapter {
                 public void onClick(View view) {
                     Integer adapterPosition = getAdapterPosition();
                     Results results = resultsList.get(adapterPosition);
-                    listener.informarSeleccionBusqueda(adapterPosition, results);
+                    listener.informarSeleccionBusqueda(adapterPosition);
                 }
             });
         }
@@ -85,7 +86,6 @@ public class BusquedaAdapter extends RecyclerView.Adapter {
                     into(imageViewCardViewMain);
             textViewCardViewNombreMain.setText(this.results.getTitle());
             textViewCardViewPrecioMain.setText("$ " + this.results.getPrice().
-
                     toString());
 
         }
@@ -93,7 +93,7 @@ public class BusquedaAdapter extends RecyclerView.Adapter {
     }
 
     public interface BusquedaAdapterListener {
-        void informarSeleccionBusqueda(Integer posicion, Results results);
+        void informarSeleccionBusqueda(Integer posicion);
     }
 
 }

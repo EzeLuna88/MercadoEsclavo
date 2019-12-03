@@ -1,6 +1,8 @@
 package com.example.mercadoesclavo.model;
 
-public class UserMercadoEsclavo {
+import java.io.Serializable;
+
+public class UserMercadoEsclavo implements Serializable {
 
     private String nombre;
     private String apellido;

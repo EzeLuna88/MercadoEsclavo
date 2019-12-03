@@ -6,40 +6,58 @@
     android:layout_height="match_parent"
     android:background="@color/icons"
     android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     tools:context=".view.fragment.MiPerfilFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imageViewPerfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="100dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageViewImageViewPerfil"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+    </androidx.cardview.widget.CardView>
 
 
     <TextView
         android:id="@+id/email"
-        android:paddingRight="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
+        android:paddingRight="20dp"
         android:text="@string/Email"
         android:textColor="@color/primary_text"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewPerfil" />
 
 
     <TextView
         android:id="@+id/textViewEmailPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:textColor="@color/secondary_text"
         android:textSize="20dp"
         app:layout_constraintLeft_toRightOf="@id/email"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewPerfil" />
 
 
     <TextView
-        android:paddingRight="20dp"
         android:id="@+id/nombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="15dp"
+        android:paddingRight="20dp"
         android:text="@string/Nombre"
         android:textColor="@color/primary_text"
         android:textSize="20dp"
@@ -48,22 +66,23 @@
         app:layout_constraintTop_toBottomOf="@id/email" />
 
     <TextView
-        android:paddingTop="15dp"
         android:id="@+id/textViewNombrePerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="15dp"
         android:textColor="@color/secondary_text"
         android:textSize="20dp"
         app:layout_constraintLeft_toRightOf="@id/nombre"
         app:layout_constraintTop_toBottomOf="@id/textViewEmailPerfil" />
 
+
     <TextView
-        android:paddingRight="20dp"
-        android:id="@+id/apellido"
+        android:id="@+id/edad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="15dp"
-        android:text="@string/Apellido"
+        android:paddingRight="20dp"
+        android:text="@string/Edad"
         android:textColor="@color/primary_text"
         android:textSize="20dp"
         android:textStyle="bold"
@@ -71,45 +90,22 @@
         app:layout_constraintTop_toBottomOf="@id/nombre" />
 
     <TextView
-        android:paddingTop="15dp"
-        android:id="@+id/textViewApellidoPerfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/secondary_text"
-        android:textSize="20dp"
-        app:layout_constraintLeft_toRightOf="@id/apellido"
-        app:layout_constraintTop_toBottomOf="@id/textViewNombrePerfil" />
-
-    <TextView
-        android:paddingRight="20dp"
-        android:id="@+id/edad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="15dp"
-        android:text="@string/Edad"
-        android:textColor="@color/primary_text"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/apellido" />
-
-    <TextView
-        android:paddingTop="15dp"
         android:id="@+id/textViewEdadPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="15dp"
         android:textColor="@color/secondary_text"
         android:textSize="20dp"
         app:layout_constraintLeft_toRightOf="@id/edad"
-        app:layout_constraintTop_toBottomOf="@id/textViewApellidoPerfil" />
+        app:layout_constraintTop_toBottomOf="@id/textViewNombrePerfil" />
 
 
     <TextView
-        android:paddingRight="20dp"
         android:id="@+id/telefono"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="15dp"
+        android:paddingRight="20dp"
         android:text="@string/Telefono"
         android:textColor="@color/primary_text"
         android:textSize="20dp"
@@ -121,12 +117,17 @@
         android:id="@+id/textViewTelefonoPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="15dp"
         android:textColor="@color/secondary_text"
         android:textSize="20dp"
-        android:paddingTop="15dp"
         app:layout_constraintLeft_toRightOf="@id/telefono"
         app:layout_constraintTop_toBottomOf="@id/textViewEdadPerfil" />
 
     <include layout="@layout/progress_bar"></include>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+

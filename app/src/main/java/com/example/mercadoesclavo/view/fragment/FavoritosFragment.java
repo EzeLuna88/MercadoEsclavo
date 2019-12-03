@@ -87,7 +87,10 @@ public class FavoritosFragment extends Fragment implements FavoritosAdapter.Favo
                             recyclerView.setAdapter(favoritosAdapter);
                             progressBar.setVisibility(View.INVISIBLE);
 
-                            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+
+                            
+
+                            /*ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
                                 @Override
                                 public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder dragged, @NonNull RecyclerView.ViewHolder target) {
                                     Integer position_dragged = dragged.getAdapterPosition();
@@ -105,7 +108,7 @@ public class FavoritosFragment extends Fragment implements FavoritosAdapter.Favo
 
                                 }
                             });
-                            itemTouchHelper.attachToRecyclerView(recyclerView);
+                            itemTouchHelper.attachToRecyclerView(recyclerView);*/
                         }
                     }
                 });

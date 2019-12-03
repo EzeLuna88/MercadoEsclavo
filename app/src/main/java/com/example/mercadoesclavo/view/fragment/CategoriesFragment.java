@@ -46,9 +46,7 @@ public class CategoriesFragment extends Fragment implements CategoriesAdapter.Ca
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
 
-        final RecyclerView recyclerView = view.findViewById(R.id.recyclerViewCategoriesFragment);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+        final RecyclerView recyclerView = getRecyclerView(view);
 
         final CategoriesController categoriesController = new CategoriesController();
         categoriesController.getCategories(new ResultListener<List<Categories>>() {
@@ -64,6 +62,13 @@ public class CategoriesFragment extends Fragment implements CategoriesAdapter.Ca
         });
 
         return view;
+    }
+
+    private RecyclerView getRecyclerView(View view) {
+        final RecyclerView recyclerView = view.findViewById(R.id.recyclerViewCategoriesFragment);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        return recyclerView;
     }
 
     @Override

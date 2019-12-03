@@ -4,6 +4,7 @@ package com.example.mercadoesclavo.view.fragment;
 import android.media.Image;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,6 +13,8 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -36,7 +39,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,8 +55,6 @@ public class DetalleProductFragment extends Fragment {
 
     @BindView(R.id.textViewTitleDetalleProductFragment)
     TextView textViewTitleDetalleProductFragment;
-    /*@BindView(R.id.imageViewCardViewDetalleProductFragment)
-    ImageView imageViewCardViewDetalleProductFragment;*/
     @BindView(R.id.textViewPriceDetalleProductFragment)
     TextView textViewPriceDetalleProductFragment;
     @BindView(R.id.textViewCantidadDetalleProductFragment)
@@ -72,6 +75,15 @@ public class DetalleProductFragment extends Fragment {
     FloatingActionButton floatingActionButton;
     @BindView(R.id.progressBarFullScreen)
     ProgressBar progressBar;
+    @BindView(R.id.textViewTituloComentarios)
+    TextView textViewTituloComentarios;
+    @BindView(R.id.editTextComentariosProductFragment)
+    EditText editTextComentariosProductFragment;
+    @BindView(R.id.cardView7)
+    CardView cardView7;
+    @BindView(R.id.sendButton)
+    ImageButton sendButton;
+
     private FirebaseAuth mAuth;
     private DetalleProducto detalleProducto;
     private Description description;
@@ -103,43 +115,79 @@ public class DetalleProductFragment extends Fragment {
         final String id = results.getId();
         getDetalleProductos(view, id);
 
+        visibilityComentarios(currentUser);
+
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                if (currentUser != null) {
-                    String userUid = mAuth.getCurrentUser().getUid();
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db = FirebaseFirestore.getInstance();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference documentReference = db.collection(mAuth.getUid()).document(id);
+                final FirebaseFirestore finalDb = db;
+                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            finalDb.collection(mAuth.getUid()).document(id)
+                                    .delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            floatingActionButton.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+                                            Toast.makeText(getContext(), "fue eliminado de favoritos", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
 
+                        } else {
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                            if (currentUser != null) {
+                                String userUid = mAuth.getCurrentUser().getUid();
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                db = FirebaseFirestore.getInstance();
+                                db.collection(userUid).document(detalleProducto.getId()).set(detalleProducto);
+                                floatingActionButton.setImageResource(R.drawable.ic_favorite_white_24dp);
+                                Toast.makeText(getContext(), "fue agregado a favoritos", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+            }
+        });
 
-                    db.collection(userUid).document(detalleProducto.getId()).set(detalleProducto);
-                    floatingActionButton.setImageResource(R.drawable.ic_favorite_white_24dp);
-                    Toast.makeText(getContext(), "fue agregado a favoritos", Toast.LENGTH_SHORT).show();
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (editTextComentariosProductFragment != null) {
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("email", mAuth.getCurrentUser().getEmail());
+                    data.put("comentario", editTextComentariosProductFragment.getText().toString());
+                    db.collection(detalleProducto.getId()).document()
+                            .set(data)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(getContext(), "comentario anadido", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 }
             }
         });
 
-        if (currentUser != null) {
-            DocumentReference documentReference = db.collection(mAuth.getUid()).document(id);
-            documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    if (documentSnapshot.exists()) {
-                        floatingActionButton.setImageResource(R.drawable.ic_favorite_white_24dp);
-                    }
-                }
-            });
-
-        }
 
         return view;
-
-
     }
 
+    private void visibilityComentarios(FirebaseUser currentUser) {
+        if (currentUser != null) {
+            cardView7.setVisibility(View.VISIBLE);
+            sendButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+
     private void getDetalleProductos(final View view, String id) {
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
         CategoriesController categoriesController = new CategoriesController();
         categoriesController.getDetalleProducto(new ResultListener<DetalleProducto>() {
             @Override
@@ -168,6 +216,8 @@ public class DetalleProductFragment extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.contenedorDeMapa, mapsFragment).commit();
+
+
             }
         }, id);
 
@@ -181,8 +231,8 @@ public class DetalleProductFragment extends Fragment {
             }
         }, id);
 
-    }
 
+    }
 
     @Override
     public void onStart() {
@@ -203,5 +253,24 @@ public class DetalleProductFragment extends Fragment {
         progressBar.setVisibility(View.INVISIBLE);
     }
 
+
+
+
+
+
+    /*if (currentUser != null) {
+        editTextComentariosProductFragment.setVisibility(View.VISIBLE);
+        Map<String, Object> data = new HashMap<>();
+        data.put("email", mAuth.getCurrentUser().getEmail());
+        data.put("comentario", editTextComentariosProductFragment.getText());
+        db.collection("comentariosMercadoEsclavo").document(detalleProducto.getId())
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getContext(), "comentario anadido", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }*/
 
 }

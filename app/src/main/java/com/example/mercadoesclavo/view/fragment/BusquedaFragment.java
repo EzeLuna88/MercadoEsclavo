@@ -1,11 +1,14 @@
 package com.example.mercadoesclavo.view.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +18,12 @@ import android.widget.ProgressBar;
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.adapter.BusquedaAdapter;
 import com.example.mercadoesclavo.adapter.ProductoAdapter;
+import com.example.mercadoesclavo.adapter.ViewPagerImagenProductoAdapter;
 import com.example.mercadoesclavo.model.Producto;
 import com.example.mercadoesclavo.model.Results;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,11 +37,18 @@ public class BusquedaFragment extends Fragment implements BusquedaAdapter.Busque
 
     @BindView(R.id.progressBarFullScreen)
     ProgressBar progressBar;
+    private Producto producto;
+        private notificadorBusqueda notificadorBusqueda;
 
     public BusquedaFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.notificadorBusqueda = (notificadorBusqueda) context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,25 +59,34 @@ public class BusquedaFragment extends Fragment implements BusquedaAdapter.Busque
         ButterKnife.bind(this, view);
         progressBar.setVisibility(View.VISIBLE);
         Bundle bundle = getArguments();
+        producto = (Producto) bundle.getSerializable(KEY_PRODUCTOS);
+
+        RecyclerView(view);
 
 
+        return view;
+    }
 
-        Producto producto = (Producto) bundle.getSerializable(KEY_PRODUCTOS);
-
+    private void RecyclerView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewBusquedaFragment);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         BusquedaAdapter busquedaAdapter = new BusquedaAdapter(producto.getResults(), BusquedaFragment.this);
         recyclerView.setAdapter(busquedaAdapter);
         progressBar.setVisibility(View.INVISIBLE);
-
-
-        return view;
     }
 
 
     @Override
-    public void informarSeleccionBusqueda(Integer posicion, Results results) {
-
+    public void informarSeleccionBusqueda(Integer posicion) {
+    notificadorBusqueda.enviarNotificacionBusqueda(producto, posicion);
     }
+
+
+
+    public interface notificadorBusqueda {
+        public void enviarNotificacionBusqueda(Producto producto, Integer posicion);
+    }
+
+
 }

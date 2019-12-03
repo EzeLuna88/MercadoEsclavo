@@ -2,6 +2,7 @@ package com.example.mercadoesclavo.view;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -10,8 +11,6 @@ import android.util.Base64;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,30 +18,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
+
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.mercadoesclavo.R;
-import com.example.mercadoesclavo.adapter.ViewPagerImagenProductoAdapter;
+
 import com.example.mercadoesclavo.controller.CategoriesController;
 import com.example.mercadoesclavo.model.Categories;
 import com.example.mercadoesclavo.model.DetalleProducto;
-import com.example.mercadoesclavo.model.Pictures;
+
 import com.example.mercadoesclavo.model.Producto;
 import com.example.mercadoesclavo.model.Results;
 import com.example.mercadoesclavo.utils.ResultListener;
 import com.example.mercadoesclavo.view.fragment.AboutUsFragment;
 import com.example.mercadoesclavo.view.fragment.BusquedaFragment;
 import com.example.mercadoesclavo.view.fragment.CategoriesFragment;
+import com.example.mercadoesclavo.view.fragment.DetalleBusquedaActivity;
+
 import com.example.mercadoesclavo.view.fragment.DetalleProductFragment;
 import com.example.mercadoesclavo.view.fragment.FavoritosFragment;
-import com.example.mercadoesclavo.view.fragment.ImagenDetalleProductoFragment;
+
 import com.example.mercadoesclavo.view.fragment.LoginFragment;
 import com.example.mercadoesclavo.view.fragment.MiPerfilFragment;
 import com.example.mercadoesclavo.view.fragment.NoResultsFragment;
@@ -57,7 +58,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity implements FavoritosFragment.notificadorFavoritos, ProductsFragment.notificadorProducto, CategoriesFragment.notificadorCategories {
+public class MainActivity extends AppCompatActivity implements BusquedaFragment.notificadorBusqueda, FavoritosFragment.notificadorFavoritos, ProductsFragment.notificadorProducto, CategoriesFragment.notificadorCategories {
 
     @BindView(R.id.navigationViewMain)
     NavigationView navigationView;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
     private FirebaseAuth mAuth;
     @BindView(R.id.toolbarMainActivity)
     Toolbar toolbar;
+    Producto producto;
 
 
     @Override
@@ -296,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
         categoriesController.getProductosBusqueda(new ResultListener<Producto>() {
             @Override
             public void onFinish(Producto result) {
-                Producto producto = result;
+                 producto = result;
                 if (producto.getResults().size() > 0) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(BusquedaFragment.KEY_PRODUCTOS, result);
@@ -317,6 +319,16 @@ public class MainActivity extends AppCompatActivity implements FavoritosFragment
     }
 
 
+    @Override
+    public void enviarNotificacionBusqueda(Producto producto, Integer posicion) {
+
+        Intent intent = new Intent(this, DetalleBusquedaActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(DetalleBusquedaActivity.KEY_PRODUCTO, producto);
+        bundle.putInt(DetalleBusquedaActivity.KEY_POSICION, posicion);
+        intent.putExtras(bundle);
+        startActivity(intent);
 
 
+    }
 }
