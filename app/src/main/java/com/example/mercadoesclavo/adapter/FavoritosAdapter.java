@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.dto.DetalleProducto;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -22,6 +29,7 @@ public class FavoritosAdapter extends RecyclerView.Adapter {
 
     private List<DetalleProducto> detalleProductoList;
     private FavoritosAdapterListener listener;
+    private FirebaseAuth mAuth;
 
     public FavoritosAdapter(List<DetalleProducto> detalleProductoList, FavoritosAdapterListener listener) {
         this.detalleProductoList = detalleProductoList;
@@ -57,6 +65,8 @@ public class FavoritosAdapter extends RecyclerView.Adapter {
         @BindView(R.id.textViewViewCardPrecioFavoritosRow)
         TextView textViewViewCardPrecioFavoritosRow;
         private DetalleProducto detalleProducto;
+        @BindView(R.id.floatingButtonQuitarFavorito)
+        FloatingActionButton floatingButtonQuitarFavorito;
 
         public FavoritosViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,11 +81,39 @@ public class FavoritosAdapter extends RecyclerView.Adapter {
             });
         }
 
-        public void bindFavoritos(DetalleProducto detalleProductoDeLaCelda) {
+        public void bindFavoritos(final DetalleProducto detalleProductoDeLaCelda) {
             this.detalleProducto = detalleProductoDeLaCelda;
             Glide.with(itemView).load(this.detalleProducto.getThumbnail()).into(imageViewCardViewFavoritosRow);
             textViewViewCardNombreFavoritosRow.setText(this.detalleProducto.getTitle());
             textViewViewCardPrecioFavoritosRow.setText("$ " + this.detalleProducto.getPrice().toString());
+            floatingButtonQuitarFavorito.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    mAuth = FirebaseAuth.getInstance();
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    DocumentReference documentReference = db.collection(mAuth.getUid()).document(detalleProductoDeLaCelda.getId());
+                    final FirebaseFirestore finalDb = db;
+                    documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+                                finalDb.collection(mAuth.getUid()).document(detalleProductoDeLaCelda.getId())
+                                        .delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(itemView.getContext(), "fue eliminado de favoritos", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+                            }
+                        }
+                    });
+
+
+                }
+            });
 
         }
     }
