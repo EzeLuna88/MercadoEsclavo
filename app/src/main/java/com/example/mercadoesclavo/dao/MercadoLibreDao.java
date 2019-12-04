@@ -1,9 +1,10 @@
 package com.example.mercadoesclavo.dao;
 
-import com.example.mercadoesclavo.model.Categories;
-import com.example.mercadoesclavo.model.Description;
-import com.example.mercadoesclavo.model.DetalleProducto;
-import com.example.mercadoesclavo.model.Producto;
+import com.example.mercadoesclavo.dto.Categories;
+import com.example.mercadoesclavo.dto.Description;
+import com.example.mercadoesclavo.dto.DetalleProducto;
+import com.example.mercadoesclavo.dto.Producto;
+
 import com.example.mercadoesclavo.service.MercadoLibreService;
 import com.example.mercadoesclavo.utils.ResultListener;
 

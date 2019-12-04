@@ -29,5 +29,7 @@
     <string name="title_activity_maps">Google Maps</string>
     <string name="Buscar">Buscar</string>
     <string name="Comentarios">Comentarios</string>
+    <string name="titulo_categories">¿Qué buscás hoy?</string>
+    <string name="home">Home</string>
 
 </resources>

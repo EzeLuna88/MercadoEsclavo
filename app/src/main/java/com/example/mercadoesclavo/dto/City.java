@@ -1,10 +1,10 @@
-package com.example.mercadoesclavo.model;
+package com.example.mercadoesclavo.dto;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class State implements Serializable {
+public class City implements Serializable {
 
     @SerializedName("name")
     private String name;
@@ -17,10 +17,10 @@ public class State implements Serializable {
         this.name = name;
     }
 
-    public State(String name) {
+    public City(String name) {
         this.name = name;
     }
 
-    public State() {
+    public City() {
     }
 }

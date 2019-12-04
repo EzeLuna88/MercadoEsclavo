@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mercadoesclavo.R;
-import com.example.mercadoesclavo.model.DetalleProducto;
+import com.example.mercadoesclavo.dto.DetalleProducto;
 
 import java.util.List;
 

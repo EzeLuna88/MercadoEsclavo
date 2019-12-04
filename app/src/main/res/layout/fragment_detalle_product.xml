@@ -40,6 +40,7 @@
                     android:layout_marginBottom="10dp"
                     android:backgroundTint="@color/accent"
                     android:src="@drawable/ic_favorite_border_white_24dp"
+                    app:borderWidth="0dp"
                     app:layout_anchor="@id/ViewPagerImageDetalleProductFragment"
                     app:layout_anchorGravity="bottom | end" />
 
@@ -62,7 +63,7 @@
                         android:id="@+id/textViewTitleDetalleProductFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="15dp"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:text="TITULO PRODUCTO"
@@ -85,7 +86,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:foregroundGravity="center_vertical"
                         android:paddingBottom="10dp"
                         android:text="200"
                         android:textColor="@color/primary_text"
@@ -129,6 +129,7 @@
                         android:id="@+id/textViewCantidadDetalleProductFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:textColor="@color/secondary_text"
@@ -151,6 +152,7 @@
                         android:id="@+id/textViewDisponibleDetalleProductFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:paddingBottom="10dp"
                         android:textColor="@color/secondary_text"
                         app:layout_constraintLeft_toRightOf="@id/textViewTituloDisponible"
@@ -190,6 +192,7 @@
                         android:id="@+id/textViewTipoDeCompraDetalleProductFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:textColor="@color/secondary_text"
@@ -212,6 +215,7 @@
                         android:id="@+id/textViewCondicionDetalleProductFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:paddingBottom="10dp"
                         android:textColor="@color/secondary_text"
                         app:layout_constraintLeft_toRightOf="@id/textViewTituloCondicion"
@@ -323,7 +327,8 @@
                         android:id="@+id/textViewDescripcionDetalleProductFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:paddingBottom="10dp"
                         android:textColor="@color/secondary_text"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -361,37 +366,45 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/RecyclerViewComentariosDetalleProductFragment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="200dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:paddingBottom="10dp"
                         android:textColor="@color/secondary_text"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/textViewTituloComentarios" />
 
                     <androidx.cardview.widget.CardView
-                        android:visibility="gone"
                         android:id="@+id/cardView7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@color/primary_light"
+                        android:elevation="5dp"
+                        android:visibility="invisible"
                         app:layout_constraintLeft_toLeftOf="parent"
+
                         app:layout_constraintTop_toBottomOf="@id/RecyclerViewComentariosDetalleProductFragment">
 
                         <EditText
+
                             android:id="@+id/editTextComentariosProductFragment"
-                            android:layout_width="match_parent"
+                            android:layout_width="300dp"
                             android:layout_height="wrap_content"
-                            android:hint="agregar comentario" />
+                            android:backgroundTint="@color/primary_light"
+                            android:hint="agregar comentario"
+                            android:textColorHint="@color/primary_light" />
 
 
                     </androidx.cardview.widget.CardView>
 
                     <ImageButton
-                        android:visibility="gone"
                         android:id="@+id/sendButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/accent"
                         android:src="@drawable/ic_send_black_24dp"
+                        android:visibility="invisible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/RecyclerViewComentariosDetalleProductFragment" />
@@ -405,8 +418,17 @@
 
     </ScrollView>
 
-
-
     <include layout="@layout/progress_bar"></include>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
 

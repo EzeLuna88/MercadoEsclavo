@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +17,12 @@ import android.widget.ProgressBar;
 
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.adapter.ProductoAdapter;
-import com.example.mercadoesclavo.controller.CategoriesController;
-import com.example.mercadoesclavo.model.Categories;
-import com.example.mercadoesclavo.model.Producto;
-import com.example.mercadoesclavo.model.Results;
+import com.example.mercadoesclavo.controller.MercadoEsclavoController;
+import com.example.mercadoesclavo.dto.Categories;
+import com.example.mercadoesclavo.dto.Producto;
+import com.example.mercadoesclavo.dto.Results;
 import com.example.mercadoesclavo.utils.ResultListener;
 
-import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
@@ -67,8 +65,8 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         final String id = category.getId();
-        final CategoriesController categoriesController = new CategoriesController();
-        getProducts(recyclerView, id, categoriesController);
+        final MercadoEsclavoController mercadoEsclavoController = new MercadoEsclavoController(getContext());
+        getProducts(recyclerView, id, mercadoEsclavoController);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -76,7 +74,7 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
                 Integer posicionActual = layoutManager.findLastVisibleItemPosition();
                 Integer ultimaCelda = layoutManager.getItemCount();
                 if (posicionActual.equals(ultimaCelda - 11)) {
-                    getProducts(recyclerView, id, categoriesController);
+                    getProducts(recyclerView, id, mercadoEsclavoController);
                 }
 
             }
@@ -86,10 +84,10 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
 
     }
 
-    private void getProducts(final RecyclerView recyclerView, String id, CategoriesController categoriesController) {
+    private void getProducts(final RecyclerView recyclerView, String id, MercadoEsclavoController mercadoEsclavoController) {
         progressBar.setVisibility(View.VISIBLE);
-        if (categoriesController.getHayMasProductos()) {
-            categoriesController.getProductos(new ResultListener<Producto>() {
+        if (mercadoEsclavoController.getHayMasProductos()) {
+            mercadoEsclavoController.getProductos(new ResultListener<Producto>() {
                 @Override
                 public void onFinish(Producto result) {
                     producto = result;

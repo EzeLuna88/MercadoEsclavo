@@ -1,4 +1,4 @@
-package com.example.mercadoesclavo.model;
+package com.example.mercadoesclavo.dto;
 
 import com.google.gson.annotations.SerializedName;
 

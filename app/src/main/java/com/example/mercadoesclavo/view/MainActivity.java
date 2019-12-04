@@ -29,12 +29,12 @@ import android.widget.Toast;
 
 import com.example.mercadoesclavo.R;
 
-import com.example.mercadoesclavo.controller.CategoriesController;
-import com.example.mercadoesclavo.model.Categories;
-import com.example.mercadoesclavo.model.DetalleProducto;
+import com.example.mercadoesclavo.controller.MercadoEsclavoController;
+import com.example.mercadoesclavo.dto.Categories;
+import com.example.mercadoesclavo.dto.DetalleProducto;
 
-import com.example.mercadoesclavo.model.Producto;
-import com.example.mercadoesclavo.model.Results;
+import com.example.mercadoesclavo.dto.Producto;
+import com.example.mercadoesclavo.dto.Results;
 import com.example.mercadoesclavo.utils.ResultListener;
 import com.example.mercadoesclavo.view.fragment.AboutUsFragment;
 import com.example.mercadoesclavo.view.fragment.BusquedaFragment;
@@ -95,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements BusquedaFragment.
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
+                    case R.id.navigationViewHome:
+                        HomeClick();
+                        break;
                     case R.id.navigationViewMenuPerfil:
                         MiPerfilClick();
                         break;
@@ -127,6 +130,13 @@ public class MainActivity extends AppCompatActivity implements BusquedaFragment.
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         drawerLayout.closeDrawers();
+    }
+
+    public void HomeClick() {
+        CategoriesFragment categoriesFragment = new CategoriesFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.contenedorDeFragment, categoriesFragment).commit();
     }
 
     public void IniciarSesionClick() {
@@ -274,8 +284,9 @@ public class MainActivity extends AppCompatActivity implements BusquedaFragment.
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) menu.findItem(R.id.itemToolBarBuscar).getActionView();
+        SearchView searchView = (SearchView) menu.findItem(R.id.itemToolBarBuscar).getActionView();
         MenuItem searchMenuItem = menu.findItem(R.id.itemToolBarBuscar);
+        searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -294,11 +305,11 @@ public class MainActivity extends AppCompatActivity implements BusquedaFragment.
     }
 
     public void search(final String key) {
-        CategoriesController categoriesController = new CategoriesController();
-        categoriesController.getProductosBusqueda(new ResultListener<Producto>() {
+        MercadoEsclavoController mercadoEsclavoController = new MercadoEsclavoController(this);
+        mercadoEsclavoController.getProductosBusqueda(new ResultListener<Producto>() {
             @Override
             public void onFinish(Producto result) {
-                 producto = result;
+                producto = result;
                 if (producto.getResults().size() > 0) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(BusquedaFragment.KEY_PRODUCTOS, result);

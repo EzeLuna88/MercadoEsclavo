@@ -12,15 +12,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.adapter.CategoriesAdapter;
-import com.example.mercadoesclavo.controller.CategoriesController;
-import com.example.mercadoesclavo.model.Categories;
+import com.example.mercadoesclavo.controller.MercadoEsclavoController;
+import com.example.mercadoesclavo.dto.Categories;
 import com.example.mercadoesclavo.utils.ResultListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +36,9 @@ public class CategoriesFragment extends Fragment implements CategoriesAdapter.Ca
 
     private List<Categories> categoriesList = new ArrayList<>();
     private notificadorCategories notificadorCategories;
+    private FirebaseAuth mAuth;
+    @BindView(R.id.bienvenida)
+    TextView bienvenida;
 
     public CategoriesFragment() {
         // Required empty public constructor
@@ -45,11 +55,21 @@ public class CategoriesFragment extends Fragment implements CategoriesAdapter.Ca
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
+        ButterKnife.bind(this, view);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null){
+            bienvenida.setText(currentUser.getDisplayName());
+            bienvenida.setVisibility(View.VISIBLE);
+        }
+
 
         final RecyclerView recyclerView = getRecyclerView(view);
 
-        final CategoriesController categoriesController = new CategoriesController();
-        categoriesController.getCategories(new ResultListener<List<Categories>>() {
+        final MercadoEsclavoController mercadoEsclavoController = new MercadoEsclavoController(getContext());
+        mercadoEsclavoController.getCategories(new ResultListener<List<Categories>>() {
             @Override
             public void onFinish(List<Categories> result) {
                 categoriesList = result;

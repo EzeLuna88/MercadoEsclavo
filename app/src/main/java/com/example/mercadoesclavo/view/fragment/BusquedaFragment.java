@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +16,7 @@ import android.widget.ProgressBar;
 
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.adapter.BusquedaAdapter;
-import com.example.mercadoesclavo.adapter.ProductoAdapter;
-import com.example.mercadoesclavo.adapter.ViewPagerImagenProductoAdapter;
-import com.example.mercadoesclavo.model.Producto;
-import com.example.mercadoesclavo.model.Results;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.mercadoesclavo.dto.Producto;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

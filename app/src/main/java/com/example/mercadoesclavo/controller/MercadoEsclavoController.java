@@ -1,42 +1,51 @@
 package com.example.mercadoesclavo.controller;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import com.example.mercadoesclavo.dao.MercadoLibreDao;
-import com.example.mercadoesclavo.model.Categories;
-import com.example.mercadoesclavo.model.Description;
-import com.example.mercadoesclavo.model.DetalleProducto;
-import com.example.mercadoesclavo.model.Producto;
+//import com.example.mercadoesclavo.dao.RoomMercadoLibreDao;
+import com.example.mercadoesclavo.dto.Categories;
+import com.example.mercadoesclavo.dto.Description;
+import com.example.mercadoesclavo.dto.DetalleProducto;
+import com.example.mercadoesclavo.dto.Producto;
 import com.example.mercadoesclavo.utils.ResultListener;
 
 import java.util.List;
 
-import javax.xml.transform.Result;
-
-public class CategoriesController {
+public class MercadoEsclavoController {
 
     private MercadoLibreDao mercadoLibreDao;
+    //private RoomMercadoLibreDao roomMercadoLibreDao;
+    private Context context;
     private Integer offset = 0;
     private Integer limit = 50;
     private Boolean hayMasProductos = true;
 
 
-    public CategoriesController() {
+    public MercadoEsclavoController(Context context) {
         this.mercadoLibreDao = new MercadoLibreDao();
+
     }
 
     public void getCategories(final ResultListener<List<Categories>> viewController) {
+
         mercadoLibreDao.getCategories(new ResultListener<List<Categories>>() {
             @Override
             public void onFinish(List<Categories> result) {
+
                 viewController.onFinish(result);
             }
         });
     }
 
+
     public void getProductos(final ResultListener<Producto> viewController, String id) {
         mercadoLibreDao.getProductos(new ResultListener<Producto>() {
             @Override
             public void onFinish(Producto result) {
-                if (result.getResults().size()<limit){
+                if (result.getResults().size() < limit) {
                     hayMasProductos = false;
                 }
                 offset = offset + limit;
@@ -45,7 +54,7 @@ public class CategoriesController {
         }, id, offset, limit);
     }
 
-    public Boolean getHayMasProductos(){
+    public Boolean getHayMasProductos() {
         return hayMasProductos;
     }
 
@@ -67,12 +76,24 @@ public class CategoriesController {
         }, id);
     }
 
-    public void getProductosBusqueda(final ResultListener<Producto> viewController, String id){
+    public void getProductosBusqueda(final ResultListener<Producto> viewController, String id) {
         mercadoLibreDao.getProductosBusqueda(new ResultListener<Producto>() {
             @Override
             public void onFinish(Producto result) {
                 viewController.onFinish(result);
             }
         }, id);
+    }
+
+
+    public Boolean hayInternet() {
+
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
     }
 }

@@ -4,8 +4,6 @@ package com.example.mercadoesclavo.view.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -19,11 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.adapter.ViewPagerImagenProductoAdapter;
-import com.example.mercadoesclavo.model.Description;
-import com.example.mercadoesclavo.model.DetalleProducto;
-import com.example.mercadoesclavo.model.Pictures;
-import com.example.mercadoesclavo.model.Producto;
-import com.example.mercadoesclavo.model.Results;
+import com.example.mercadoesclavo.dto.Results;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,9 +25,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

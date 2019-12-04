@@ -1,6 +1,5 @@
 package com.example.mercadoesclavo.adapter;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mercadoesclavo.R;
-import com.example.mercadoesclavo.model.Categories;
-import com.example.mercadoesclavo.model.Producto;
+import com.example.mercadoesclavo.dto.Categories;
 
 import java.util.List;
 

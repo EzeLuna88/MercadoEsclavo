@@ -1,7 +1,6 @@
 package com.example.mercadoesclavo.view.fragment;
 
 
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -17,22 +16,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.adapter.ComentariosAdapter;
 import com.example.mercadoesclavo.adapter.ViewPagerImagenProductoAdapter;
-import com.example.mercadoesclavo.controller.CategoriesController;
-import com.example.mercadoesclavo.model.Comentario;
-import com.example.mercadoesclavo.model.Description;
-import com.example.mercadoesclavo.model.DetalleProducto;
-import com.example.mercadoesclavo.model.Geolocation;
-import com.example.mercadoesclavo.model.Pictures;
-import com.example.mercadoesclavo.model.Results;
+import com.example.mercadoesclavo.controller.MercadoEsclavoController;
+import com.example.mercadoesclavo.dto.Comentario;
+import com.example.mercadoesclavo.dto.Description;
+import com.example.mercadoesclavo.dto.DetalleProducto;
+import com.example.mercadoesclavo.dto.Pictures;
+import com.example.mercadoesclavo.dto.Results;
 import com.example.mercadoesclavo.utils.ResultListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -225,8 +221,8 @@ public class DetalleProductFragment extends Fragment {
     private void getDetalleProductos(final View view, String id) {
         final FirebaseUser currentUser = mAuth.getCurrentUser();
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CategoriesController categoriesController = new CategoriesController();
-        categoriesController.getDetalleProducto(new ResultListener<DetalleProducto>() {
+        MercadoEsclavoController mercadoEsclavoController = new MercadoEsclavoController(getContext());
+        mercadoEsclavoController.getDetalleProducto(new ResultListener<DetalleProducto>() {
             @Override
             public void onFinish(DetalleProducto result) {
 
@@ -258,7 +254,7 @@ public class DetalleProductFragment extends Fragment {
             }
         }, id);
 
-        categoriesController.getDescription(new ResultListener<Description>() {
+        mercadoEsclavoController.getDescription(new ResultListener<Description>() {
             @Override
             public void onFinish(Description result) {
                 description = result;

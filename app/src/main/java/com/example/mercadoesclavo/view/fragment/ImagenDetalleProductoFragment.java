@@ -1,7 +1,6 @@
 package com.example.mercadoesclavo.view.fragment;
 
 
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,7 +12,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.mercadoesclavo.R;
-import com.example.mercadoesclavo.model.Pictures;
+import com.example.mercadoesclavo.dto.Pictures;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

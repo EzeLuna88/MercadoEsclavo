@@ -1,5 +1,7 @@
 package com.example.mercadoesclavo.adapter;
 
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mercadoesclavo.R;
-import com.example.mercadoesclavo.model.Comentario;
+import com.example.mercadoesclavo.dto.Comentario;
 
 import java.util.List;
 
@@ -59,7 +61,9 @@ public class ComentariosAdapter extends RecyclerView.Adapter {
 
         public void bindComentarios(Comentario comentarioDeLaCelda) {
             this.comentario = comentarioDeLaCelda;
-            textViewRowComentariosEmail.setText(comentario.getEmail());
+            SpannableString content = new SpannableString(comentario.getEmail());
+            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+            textViewRowComentariosEmail.setText(content);
             textViewRowComentariosComentario.setText(comentario.getComentario());
         }
 

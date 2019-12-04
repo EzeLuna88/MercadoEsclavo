@@ -1,9 +1,9 @@
 package com.example.mercadoesclavo.service;
 
-import com.example.mercadoesclavo.model.Categories;
-import com.example.mercadoesclavo.model.Description;
-import com.example.mercadoesclavo.model.DetalleProducto;
-import com.example.mercadoesclavo.model.Producto;
+import com.example.mercadoesclavo.dto.Categories;
+import com.example.mercadoesclavo.dto.Description;
+import com.example.mercadoesclavo.dto.DetalleProducto;
+import com.example.mercadoesclavo.dto.Producto;
 
 import java.util.List;
 

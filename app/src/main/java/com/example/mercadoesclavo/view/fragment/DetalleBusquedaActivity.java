@@ -9,9 +9,9 @@ import android.os.Bundle;
 
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.adapter.ViewPagerImagenProductoAdapter;
-import com.example.mercadoesclavo.model.Description;
-import com.example.mercadoesclavo.model.Producto;
-import com.example.mercadoesclavo.model.Results;
+import com.example.mercadoesclavo.dto.Description;
+import com.example.mercadoesclavo.dto.Producto;
+import com.example.mercadoesclavo.dto.Results;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
