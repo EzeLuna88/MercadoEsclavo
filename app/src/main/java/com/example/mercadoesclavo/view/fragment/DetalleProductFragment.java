@@ -8,6 +8,8 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -22,8 +24,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mercadoesclavo.R;
+import com.example.mercadoesclavo.adapter.ComentariosAdapter;
 import com.example.mercadoesclavo.adapter.ViewPagerImagenProductoAdapter;
 import com.example.mercadoesclavo.controller.CategoriesController;
+import com.example.mercadoesclavo.model.Comentario;
 import com.example.mercadoesclavo.model.Description;
 import com.example.mercadoesclavo.model.DetalleProducto;
 import com.example.mercadoesclavo.model.Geolocation;
@@ -37,6 +41,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -118,6 +124,39 @@ public class DetalleProductFragment extends Fragment {
         visibilityComentarios(currentUser);
 
 
+        botonFavoritos(id);
+
+
+
+
+        botonEnviarComentarios(db);
+
+
+        return view;
+    }
+
+    private void getComentariosList(final View view, FirebaseFirestore db) {
+        db.collection(detalleProducto.getId())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<Comentario> comentarioList = new ArrayList<>();
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                            Comentario comentario = queryDocumentSnapshot.toObject(Comentario.class);
+                            comentarioList.add(comentario);
+
+                            RecyclerView recyclerView = view.findViewById(R.id.RecyclerViewComentariosDetalleProductFragment);
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                            recyclerView.setLayoutManager(layoutManager);
+                            final ComentariosAdapter comentariosAdapter = new ComentariosAdapter(comentarioList);
+                            recyclerView.setAdapter(comentariosAdapter);
+                        }
+                    }
+                });
+    }
+
+    private void botonFavoritos(final String id) {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,7 +192,9 @@ public class DetalleProductFragment extends Fragment {
                 });
             }
         });
+    }
 
+    private void botonEnviarComentarios(final FirebaseFirestore db) {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,9 +213,6 @@ public class DetalleProductFragment extends Fragment {
                 }
             }
         });
-
-
-        return view;
     }
 
     private void visibilityComentarios(FirebaseUser currentUser) {
@@ -183,7 +221,6 @@ public class DetalleProductFragment extends Fragment {
             sendButton.setVisibility(View.VISIBLE);
         }
     }
-
 
     private void getDetalleProductos(final View view, String id) {
         final FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -216,7 +253,7 @@ public class DetalleProductFragment extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.contenedorDeMapa, mapsFragment).commit();
-
+                getComentariosList(view, db);
 
             }
         }, id);
@@ -258,19 +295,6 @@ public class DetalleProductFragment extends Fragment {
 
 
 
-    /*if (currentUser != null) {
-        editTextComentariosProductFragment.setVisibility(View.VISIBLE);
-        Map<String, Object> data = new HashMap<>();
-        data.put("email", mAuth.getCurrentUser().getEmail());
-        data.put("comentario", editTextComentariosProductFragment.getText());
-        db.collection("comentariosMercadoEsclavo").document(detalleProducto.getId())
-                .set(data)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getContext(), "comentario anadido", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }*/
+
 
 }

@@ -39,14 +39,13 @@ public class FavoritosAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-    DetalleProducto detalleProductoDeLaLista = this.detalleProductoList.get(position);
-    FavoritosViewHolder favoritosViewHolder = (FavoritosViewHolder) holder;
-    favoritosViewHolder.bindFavoritos(detalleProductoDeLaLista);
+        DetalleProducto detalleProductoDeLaLista = this.detalleProductoList.get(position);
+        FavoritosViewHolder favoritosViewHolder = (FavoritosViewHolder) holder;
+        favoritosViewHolder.bindFavoritos(detalleProductoDeLaLista);
     }
 
     @Override
     public int getItemCount() {
-
         return this.detalleProductoList.size();
     }
 
@@ -80,7 +79,6 @@ public class FavoritosAdapter extends RecyclerView.Adapter {
 
         }
     }
-
 
 
     public interface FavoritosAdapterListener {
