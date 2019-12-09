@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements BusquedaFragment.
         if (currentUser == null) {
             GoToLoginFragment();
         } else {
-            Toast.makeText(this, "Ya haz iniciado sesion", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Ya has iniciado sesion", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements BusquedaFragment.
         if (currentUser != null) {
             GoToFavoritosFragment();
         } else {
-            Toast.makeText(this, "No haz iniciado sesion", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No has iniciado sesion", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements BusquedaFragment.
             FirebaseAuth.getInstance().signOut();
             Toast.makeText(MainActivity.this, "Sesion finalizada", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "No haz iniciado sesion", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No has iniciado sesion", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements BusquedaFragment.
         if (currentUser != null) {
             GoToPerfilFragment();
         } else {
-            Toast.makeText(this, "No haz iniciado sesion", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No has iniciado sesion", Toast.LENGTH_SHORT).show();
         }
     }
 

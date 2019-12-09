@@ -10,7 +10,7 @@ import com.example.mercadoesclavo.dto.Results;
 import java.util.List;
 
 @Dao
-public interface RoomMercadoLibreDao {
+public interface RoomCategoriesDao {
 
     @Query("SELECT * FROM Categories")
     List<Categories> getAll();

@@ -17,7 +17,9 @@ import android.widget.ProgressBar;
 
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.adapter.FavoritosAdapter;
+import com.example.mercadoesclavo.controller.MercadoEsclavoController;
 import com.example.mercadoesclavo.dto.DetalleProducto;
+import com.example.mercadoesclavo.utils.ResultListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -62,13 +64,37 @@ public class FavoritosFragment extends Fragment implements FavoritosAdapter.Favo
         ButterKnife.bind(this, view);
         mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        getFavoritos(view, db);
+        // getFavoritos(view, db);
+
+        final MercadoEsclavoController mercadoEsclavoController = new MercadoEsclavoController(getContext());
+        mercadoEsclavoController.getFavoritos(new ResultListener<List<DetalleProducto>>() {
+            @Override
+            public void onFinish(List<DetalleProducto> result) {
+                List<DetalleProducto> detalleProductoList = new ArrayList<>();
+                detalleProductoList = result;
+                RecyclerView recyclerView = view.findViewById(R.id.recyclerViewFavoritos);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                recyclerView.setLayoutManager(layoutManager);
+                FavoritosAdapter favoritosAdapter = new FavoritosAdapter(detalleProductoList, FavoritosFragment.this);
+
+
+                ItemTouchHelper.Callback callback =
+                        new ItemMoveCallback(favoritosAdapter);
+                ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+                touchHelper.attachToRecyclerView(recyclerView);
+
+
+                recyclerView.setAdapter(favoritosAdapter);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        }, db);
 
 
         return view;
     }
 
-    private void getFavoritos(final View view, FirebaseFirestore db) {
+
+    /*private void getFavoritos(final View view, FirebaseFirestore db) {
         progressBar.setVisibility(View.VISIBLE);
         db.collection(mAuth.getCurrentUser().getUid())
                 .get()
@@ -90,21 +116,15 @@ public class FavoritosFragment extends Fragment implements FavoritosAdapter.Favo
                             ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
                             touchHelper.attachToRecyclerView(recyclerView);
 
-
-
-
                             recyclerView.setAdapter(favoritosAdapter);
                             progressBar.setVisibility(View.INVISIBLE);
-
-
-
 
 
                         }
                     }
                 });
     }
-
+*/
     @Override
     public void onStart() {
         super.onStart();

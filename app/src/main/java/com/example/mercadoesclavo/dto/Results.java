@@ -1,5 +1,6 @@
 package com.example.mercadoesclavo.dto;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -9,42 +10,55 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-
+@Entity
 public class Results implements Serializable {
 
-
+    @PrimaryKey
     private Integer idRoom;
 
-
+    @ColumnInfo
     @SerializedName("id")
     private String id;
+    @ColumnInfo
     @SerializedName("title")
     private String title;
+    @ColumnInfo
     @SerializedName("price")
     private Double price;
+    @ColumnInfo
     @SerializedName("thumbnail")
     private String thumbnail;
-
+    @ColumnInfo
     @SerializedName("seller_id")
     private String sellerId;
-
+    @ColumnInfo
     @SerializedName("initial_quantity")
     private Integer initialQuantity;
+
+    @ColumnInfo
     @SerializedName("available_quantity")
     private Integer availableQuantity;
+    @ColumnInfo
     @SerializedName("buying_mode")
     private String buyingMode;
+
+    @ColumnInfo
     @SerializedName("condition")
     private String condition;
 
+    @ColumnInfo
     @SerializedName("secure_thumbnail")
     private String secureThumbnail;
+    @Ignore
     @SerializedName("pictures")
     private List<Pictures> pictures;
+    @Ignore
     @SerializedName("seller_address")
     private SellerAddress sellerAddress;
+    @ColumnInfo
     @SerializedName("warranty")
     private String warranty;
+    @Ignore
     @SerializedName("geolocation")
     private Geolocation geolocation;
 

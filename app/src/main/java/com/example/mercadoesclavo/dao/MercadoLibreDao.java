@@ -7,7 +7,13 @@ import com.example.mercadoesclavo.dto.Producto;
 
 import com.example.mercadoesclavo.service.MercadoLibreService;
 import com.example.mercadoesclavo.utils.ResultListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -17,6 +23,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MercadoLibreDao {
+
+    private FirebaseAuth mAuth;
 
     public static final String BASE_URL = "https://api.mercadolibre.com/sites/MLA/";
 
@@ -99,7 +107,6 @@ public class MercadoLibreDao {
         });
     }
 
-
     public void getProductosBusqueda(final ResultListener<Producto> controllerListener, String id) {
         Call<Producto> call = mercadoLibreService.getProductosBusqueda(id);
         call.enqueue((new Callback<Producto>() {
@@ -114,5 +121,22 @@ public class MercadoLibreDao {
                 t.printStackTrace();
             }
         }));
+    }
+
+    public void getFavoritos(final ResultListener<List<DetalleProducto>> controllerListener, FirebaseFirestore db) {
+        mAuth = FirebaseAuth.getInstance();
+        db.collection(mAuth.getCurrentUser().getUid())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        final List<DetalleProducto> detalleProductoList = new ArrayList<>();
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                            DetalleProducto detalleProducto = queryDocumentSnapshot.toObject(DetalleProducto.class);
+                            detalleProductoList.add(detalleProducto);
+                            controllerListener.onFinish(detalleProductoList);
+                        }
+                    }
+                });
     }
 }
