@@ -1,5 +1,6 @@
 package com.example.mercadoesclavo.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mercadoesclavo.R;
 import com.example.mercadoesclavo.dto.DetalleProducto;
+import com.example.mercadoesclavo.view.fragment.ItemMoveCallback;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,16 +22,19 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FavoritosAdapter extends RecyclerView.Adapter {
+public class  FavoritosAdapter extends RecyclerView.Adapter implements ItemMoveCallback.ItemTouchHelperContract {
 
     private List<DetalleProducto> detalleProductoList;
     private FavoritosAdapterListener listener;
     private FirebaseAuth mAuth;
+
+
 
     public FavoritosAdapter(List<DetalleProducto> detalleProductoList, FavoritosAdapterListener listener) {
         this.detalleProductoList = detalleProductoList;
@@ -57,7 +62,9 @@ public class FavoritosAdapter extends RecyclerView.Adapter {
         return this.detalleProductoList.size();
     }
 
-    class FavoritosViewHolder extends RecyclerView.ViewHolder {
+
+
+    public class FavoritosViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.imageViewCardViewFavoritosRow)
         ImageView imageViewCardViewFavoritosRow;
         @BindView(R.id.textViewViewCardNombreFavoritosRow)
@@ -67,9 +74,11 @@ public class FavoritosAdapter extends RecyclerView.Adapter {
         private DetalleProducto detalleProducto;
         @BindView(R.id.floatingButtonQuitarFavorito)
         FloatingActionButton floatingButtonQuitarFavorito;
+        View rowView;
 
         public FavoritosViewHolder(@NonNull View itemView) {
             super(itemView);
+            rowView = itemView;
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -104,6 +113,7 @@ public class FavoritosAdapter extends RecyclerView.Adapter {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 Toast.makeText(itemView.getContext(), "fue eliminado de favoritos", Toast.LENGTH_SHORT).show();
+
                                             }
                                         });
 
@@ -116,6 +126,32 @@ public class FavoritosAdapter extends RecyclerView.Adapter {
             });
 
         }
+
+
+    }
+
+    @Override
+    public void onRowMoved(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(detalleProductoList, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(detalleProductoList, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    @Override
+    public void onRowSelected(FavoritosAdapter.FavoritosViewHolder myViewHolder) {
+        myViewHolder.rowView.setBackgroundColor(Color.GRAY);
+    }
+
+    @Override
+    public void onRowClear(FavoritosAdapter.FavoritosViewHolder myViewHolder) {
+        myViewHolder.rowView.setBackgroundColor(Color.WHITE);
     }
 
 

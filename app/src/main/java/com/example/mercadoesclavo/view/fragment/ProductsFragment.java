@@ -38,6 +38,7 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
     private Producto producto;
     private List<Results> productoList;
     private notificadorProducto notificadorProducto;
+    private GridLayoutManager layoutManager;
     @BindView(R.id.progressBarFullScreen)
     ProgressBar progressBar;
 
@@ -62,10 +63,11 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
 
         Categories category = (Categories) bundle.getSerializable(KEY_CATEGORIES);
         final RecyclerView recyclerView = view.findViewById(R.id.recyclerViewMainFragment);
-        final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2, LinearLayoutManager.VERTICAL, false);
+        layoutManager = new GridLayoutManager(getContext(), 2, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         final String id = category.getId();
         final MercadoEsclavoController mercadoEsclavoController = new MercadoEsclavoController(getContext());
+        progressBar.setVisibility(View.VISIBLE);
         getProducts(recyclerView, id, mercadoEsclavoController);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -73,8 +75,9 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
                 super.onScrolled(recyclerView, dx, dy);
                 Integer posicionActual = layoutManager.findLastVisibleItemPosition();
                 Integer ultimaCelda = layoutManager.getItemCount();
-                if (posicionActual.equals(ultimaCelda - 11)) {
+                if (posicionActual.equals(ultimaCelda - 5)) {
                     getProducts(recyclerView, id, mercadoEsclavoController);
+
                 }
 
             }
@@ -85,7 +88,7 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
     }
 
     private void getProducts(final RecyclerView recyclerView, String id, MercadoEsclavoController mercadoEsclavoController) {
-        progressBar.setVisibility(View.VISIBLE);
+
         if (mercadoEsclavoController.getHayMasProductos()) {
             mercadoEsclavoController.getProductos(new ResultListener<Producto>() {
                 @Override
@@ -93,12 +96,14 @@ public class ProductsFragment extends Fragment implements ProductoAdapter.Produc
                     producto = result;
                     if (productoList == null) {
                         productoList = result.getResults();
+                        progressBar.setVisibility(View.INVISIBLE);
                     } else {
                         productoList.addAll(result.getResults());
+                        layoutManager.scrollToPosition(productoList.size()-53);
                     }
                     ProductoAdapter productoAdapter = new ProductoAdapter(productoList, ProductsFragment.this);
                     recyclerView.setAdapter(productoAdapter);
-                    progressBar.setVisibility(View.INVISIBLE);
+
                 }
             }, id);
         }

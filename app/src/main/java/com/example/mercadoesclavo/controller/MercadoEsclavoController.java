@@ -4,8 +4,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.example.mercadoesclavo.config.AppDatabase;
 import com.example.mercadoesclavo.dao.MercadoLibreDao;
 //import com.example.mercadoesclavo.dao.RoomMercadoLibreDao;
+import com.example.mercadoesclavo.dao.RoomMercadoLibreDao;
 import com.example.mercadoesclavo.dto.Categories;
 import com.example.mercadoesclavo.dto.Description;
 import com.example.mercadoesclavo.dto.DetalleProducto;
@@ -17,7 +19,7 @@ import java.util.List;
 public class MercadoEsclavoController {
 
     private MercadoLibreDao mercadoLibreDao;
-    //private RoomMercadoLibreDao roomMercadoLibreDao;
+    private RoomMercadoLibreDao roomMercadoLibreDao;
     private Context context;
     private Integer offset = 0;
     private Integer limit = 50;
@@ -25,19 +27,27 @@ public class MercadoEsclavoController {
 
 
     public MercadoEsclavoController(Context context) {
+        this.context = context;
         this.mercadoLibreDao = new MercadoLibreDao();
+        this.roomMercadoLibreDao = AppDatabase.getInstance(context).roomMercadoLibreDao();
 
     }
 
+
     public void getCategories(final ResultListener<List<Categories>> viewController) {
-
-        mercadoLibreDao.getCategories(new ResultListener<List<Categories>>() {
-            @Override
-            public void onFinish(List<Categories> result) {
-
-                viewController.onFinish(result);
-            }
-        });
+        if (hayInternet()) {
+            mercadoLibreDao.getCategories(new ResultListener<List<Categories>>() {
+                @Override
+                public void onFinish(List<Categories> result) {
+                    roomMercadoLibreDao.delete();
+                    roomMercadoLibreDao.insert(result);
+                    viewController.onFinish(result);
+                }
+            });
+        } else {
+            List<Categories> categoriesList = roomMercadoLibreDao.getAll();
+            viewController.onFinish(categoriesList);
+        }
     }
 
 
@@ -58,7 +68,8 @@ public class MercadoEsclavoController {
         return hayMasProductos;
     }
 
-    public void getDetalleProducto(final ResultListener<DetalleProducto> viewController, String id) {
+    public void getDetalleProducto(
+            final ResultListener<DetalleProducto> viewController, String id) {
         mercadoLibreDao.getDetalleProducto(new ResultListener<DetalleProducto>() {
             @Override
             public void onFinish(DetalleProducto result) {

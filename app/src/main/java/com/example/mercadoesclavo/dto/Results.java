@@ -1,11 +1,20 @@
 package com.example.mercadoesclavo.dto;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
 
+
 public class Results implements Serializable {
+
+
+    private Integer idRoom;
+
 
     @SerializedName("id")
     private String id;
@@ -151,9 +160,18 @@ public class Results implements Serializable {
         this.thumbnail = thumbnail;
     }
 
+    public Integer getIdRoom() {
+        return idRoom;
+    }
 
-    public Results(String id, String title, Double price, String thumbnail, String sellerId, Integer initialQuantity, Integer availableQuantity, String buyingMode, String condition, String secureThumbnail, List<Pictures> pictures, SellerAddress sellerAddress, String warranty, Geolocation geolocation) {
+    public void setIdRoom(Integer idRoom) {
+        this.idRoom = idRoom;
+    }
+
+    @Ignore
+    public Results(Integer idRoom, String id, String title, Double price, String thumbnail, String sellerId, Integer initialQuantity, Integer availableQuantity, String buyingMode, String condition, String secureThumbnail, List<Pictures> pictures, SellerAddress sellerAddress, String warranty, Geolocation geolocation) {
         this.id = id;
+        this.idRoom = idRoom;
         this.title = title;
         this.price = price;
         this.thumbnail = thumbnail;

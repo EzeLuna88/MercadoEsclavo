@@ -4,7 +4,8 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-/*import com.example.mercadoesclavo.model.Categories;
+import com.example.mercadoesclavo.dto.Categories;
+import com.example.mercadoesclavo.dto.Results;
 
 import java.util.List;
 
@@ -12,12 +13,21 @@ import java.util.List;
 public interface RoomMercadoLibreDao {
 
     @Query("SELECT * FROM Categories")
-    List<Categories>getAll();
+    List<Categories> getAll();
 
     @Insert
-    void insert (Categories... categories);
+    void insert(Categories... categories);
+
+    @Insert
+    void insert(List<Categories> categoriesList);
 
     @Query("DELETE FROM CATEGORIES")
     void delete();
 
-}*/
+
+
+
+
+
+
+}

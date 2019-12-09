@@ -123,8 +123,6 @@ public class DetalleProductFragment extends Fragment {
         botonFavoritos(id);
 
 
-
-
         botonEnviarComentarios(db);
 
 
