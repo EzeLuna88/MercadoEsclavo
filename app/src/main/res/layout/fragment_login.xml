@@ -12,7 +12,7 @@
         android:id="@+id/emailLoginFragment"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:backgroundTint="@color/primary_text"
         android:hint="@string/Email"
         android:inputType="textEmailAddress"
@@ -25,6 +25,7 @@
     <EditText
         android:id="@+id/passwordLoginFragment"
         android:layout_width="300dp"
+        android:inputType="textPassword"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/primary_text"
         android:hint="@string/Password"

@@ -98,7 +98,6 @@ public class  FavoritosAdapter extends RecyclerView.Adapter implements ItemMoveC
             floatingButtonQuitarFavorito.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     mAuth = FirebaseAuth.getInstance();
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     DocumentReference documentReference = db.collection(mAuth.getUid()).document(detalleProductoDeLaCelda.getId());

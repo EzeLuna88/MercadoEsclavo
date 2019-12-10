@@ -8,9 +8,11 @@ import com.example.mercadoesclavo.config.AppDatabase;
 import com.example.mercadoesclavo.dao.MercadoLibreDao;
 //import com.example.mercadoesclavo.dao.RoomCategoriesDao;
 import com.example.mercadoesclavo.dao.RoomCategoriesDao;
+import com.example.mercadoesclavo.dao.RoomCityDao;
 import com.example.mercadoesclavo.dao.RoomDescriptionDao;
 import com.example.mercadoesclavo.dao.RoomDetalleProductoDao;
 import com.example.mercadoesclavo.dao.RoomResultsDao;
+import com.example.mercadoesclavo.dao.RoomSellerAddressDao;
 import com.example.mercadoesclavo.dto.Categories;
 import com.example.mercadoesclavo.dto.Description;
 import com.example.mercadoesclavo.dto.DetalleProducto;
@@ -28,6 +30,8 @@ public class MercadoEsclavoController {
     private RoomResultsDao roomResultsDao;
     private RoomDescriptionDao roomDescriptionDao;
     private RoomDetalleProductoDao roomDetalleProductoDao;
+    private RoomSellerAddressDao roomSellerAddressDao;
+    private RoomCityDao roomCityDao;
     private Context context;
     private Integer offset = 0;
     private Integer limit = 50;
@@ -41,6 +45,8 @@ public class MercadoEsclavoController {
         this.roomResultsDao = AppDatabase.getInstance(context).roomResultsDao();
         this.roomDetalleProductoDao = AppDatabase.getInstance(context).roomDetalleProductoDao();
         this.roomDescriptionDao = AppDatabase.getInstance(context).roomDescriptionDao();
+        this.roomSellerAddressDao = AppDatabase.getInstance(context).roomSellerAddressDao();
+        this.roomCityDao = AppDatabase.getInstance(context).roomCityDao();
     }
 
     public void getCategories(final ResultListener<List<Categories>> viewController) {
@@ -69,6 +75,8 @@ public class MercadoEsclavoController {
                     }
                     offset = offset + limit;
                     roomResultsDao.delete();
+
+                    roomSellerAddressDao.insert();
                     roomResultsDao.insert(result.getResults());
                     viewController.onFinish(result);
                 }

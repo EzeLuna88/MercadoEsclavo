@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,7 +24,10 @@ import com.example.mercadoesclavo.utils.ResultListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -63,9 +67,27 @@ public class FavoritosFragment extends Fragment implements FavoritosAdapter.Favo
         final View view = inflater.inflate(R.layout.fragment_favoritos, container, false);
         ButterKnife.bind(this, view);
         mAuth = FirebaseAuth.getInstance();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
         // getFavoritos(view, db);
 
+        getFavoritosList(view, db);
+
+
+        db.collection(mAuth.getUid())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        getFavoritosList(view, db);
+                        if (e != null) {
+                            return;
+                        }
+                    }
+                });
+        return view;
+    }
+
+    private void getFavoritosList(final View view, FirebaseFirestore db) {
         final MercadoEsclavoController mercadoEsclavoController = new MercadoEsclavoController(getContext());
         mercadoEsclavoController.getFavoritos(new ResultListener<List<DetalleProducto>>() {
             @Override
@@ -88,9 +110,6 @@ public class FavoritosFragment extends Fragment implements FavoritosAdapter.Favo
                 progressBar.setVisibility(View.INVISIBLE);
             }
         }, db);
-
-
-        return view;
     }
 
 

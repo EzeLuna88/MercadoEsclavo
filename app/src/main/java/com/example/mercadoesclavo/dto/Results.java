@@ -2,6 +2,7 @@ package com.example.mercadoesclavo.dto;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
@@ -10,7 +11,9 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
+@Entity(foreignKeys = @ForeignKey(entity = SellerAddress.class,
+        parentColumns = "id",
+        childColumns = "sellerAddressId"))
 public class Results implements Serializable {
 
     @PrimaryKey
@@ -52,15 +55,27 @@ public class Results implements Serializable {
     @Ignore
     @SerializedName("pictures")
     private List<Pictures> pictures;
-    @Ignore
+    @ColumnInfo
     @SerializedName("seller_address")
+    @Ignore
     private SellerAddress sellerAddress;
+    @ColumnInfo(index = true)
+    private Integer sellerAddressId;
     @ColumnInfo
     @SerializedName("warranty")
     private String warranty;
+    @ColumnInfo
     @Ignore
     @SerializedName("geolocation")
     private Geolocation geolocation;
+
+    public Integer getSellerAddressId() {
+        return sellerAddressId;
+    }
+
+    public void setSellerAddressId(Integer sellerAddressId) {
+        this.sellerAddressId = sellerAddressId;
+    }
 
     public String getId() {
         return id;

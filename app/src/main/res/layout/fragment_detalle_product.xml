@@ -387,7 +387,6 @@
                         app:layout_constraintTop_toBottomOf="@id/RecyclerViewComentariosDetalleProductFragment">
 
                         <EditText
-
                             android:id="@+id/editTextComentariosProductFragment"
                             android:layout_width="300dp"
                             android:layout_height="wrap_content"

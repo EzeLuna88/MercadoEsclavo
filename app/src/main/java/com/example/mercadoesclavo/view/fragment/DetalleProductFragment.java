@@ -3,6 +3,7 @@ package com.example.mercadoesclavo.view.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -36,7 +37,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -125,6 +128,18 @@ public class DetalleProductFragment extends Fragment {
 
         botonEnviarComentarios(db);
 
+        db.collection(mAuth.getUid())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        getComentariosList(view, db);
+                        if (e != null) {
+                            return;
+                        }
+                    }
+                });
+
 
         return view;
     }
@@ -139,7 +154,6 @@ public class DetalleProductFragment extends Fragment {
                         for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
                             Comentario comentario = queryDocumentSnapshot.toObject(Comentario.class);
                             comentarioList.add(comentario);
-
                             RecyclerView recyclerView = view.findViewById(R.id.RecyclerViewComentariosDetalleProductFragment);
                             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                             recyclerView.setLayoutManager(layoutManager);
@@ -283,12 +297,6 @@ public class DetalleProductFragment extends Fragment {
         pager.setAdapter(pagerAdapter);
         progressBar.setVisibility(View.INVISIBLE);
     }
-
-
-
-
-
-
 
 
 }
